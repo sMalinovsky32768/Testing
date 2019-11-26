@@ -8,9 +8,9 @@ namespace Testing
 {
     class QuestionOneCorrect
     {
-        private string QuestionWording { get; set; } // Формулировка вопроса
-        private List<string> answerChoice = new List<string>();
-        private List<string> AnswerChoice
+        public string QuestionWording { get; set; } // Формулировка вопроса
+        public List<string> answerChoice = new List<string>();
+        public List<string> AnswerChoice
         {
             get
             {
@@ -21,7 +21,7 @@ namespace Testing
                 answerChoice = value;
             }
         }
-        private int Correct { get; set; } // Номер правильного ответа (ключ AnswerChoice)
+        public int Correct { get; set; } // Номер правильного ответа (ключ AnswerChoice)
 
         public QuestionOneCorrect(string question, int correct, params string[] choices)
         {
@@ -36,9 +36,9 @@ namespace Testing
 
     class QuestionManyCorrect
     {
-        private string QuestionWording { get; set; } // Формулировка вопроса
-        private List<AnswerForManyCorrect> answerChoice = new List<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
-        private List<AnswerForManyCorrect> AnswerChoice
+        public string QuestionWording { get; set; } // Формулировка вопроса
+        public List<AnswerForManyCorrect> answerChoice = new List<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
+        public List<AnswerForManyCorrect> AnswerChoice
         {
             get
             {
@@ -62,8 +62,8 @@ namespace Testing
 
     class QuestionInputAnswer
     {
-        private string QuestionWording { get; set; } // Формулировка вопроса
-        private string Answer { get; set; } // Ответ
+        public string QuestionWording { get; set; } // Формулировка вопроса
+        public string Answer { get; set; } // Ответ
 
         public QuestionInputAnswer(string question, string answer)
         {
@@ -74,10 +74,10 @@ namespace Testing
 
     class QuestionAccordance
     {
-        private string QuestionWording { get; set; } // Формулировка вопроса
-        private List<string> AccordanceColunm1 { get; set; }
-        private List<string> AccordanceColunm2 { get; set; }
-        private Dictionary<int, int> Accordance { get; set; } // Словарь соответствия AccordanceColumn1 и AccordanceColumn2
+        public string QuestionWording { get; set; } // Формулировка вопроса
+        public List<string> AccordanceColunm1 { get; set; }
+        public List<string> AccordanceColunm2 { get; set; }
+        public Dictionary<int, int> Accordance { get; set; } // Словарь соответствия AccordanceColumn1 и AccordanceColumn2
 
         public QuestionAccordance()
         {
@@ -87,8 +87,8 @@ namespace Testing
 
     class AnswerForManyCorrect // Класс ответов для вопросов с несколькими правильными ответами
     {
-        private string Answer { get; set; }
-        private Boolean IsCorrect { get; set; }
+        public string Answer { get; set; }
+        public Boolean IsCorrect { get; set; }
 
         public AnswerForManyCorrect(string answer, Boolean isCorrect)
         {
@@ -99,8 +99,8 @@ namespace Testing
 
     class QuestionWithType // Вопрос с типом
     {
-        private TypeOfQuestion Type { get; set; }
-        private object Question { get; set; }
+        public TypeOfQuestion Type { get; set; }
+        public object Question { get; set; }
 
         public QuestionWithType(TypeOfQuestion type, object question)
         {

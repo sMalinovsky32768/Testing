@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.Json;
 
 namespace Testing
 {
@@ -31,7 +32,9 @@ namespace Testing
             test.AddQuestionInputAnswer(new QuestionInputAnswer("Вопрос3", "123"));
             string path = Properties.Settings.Default.defaulf_test_file_save_path + "123.json";
             Task task = test.SaveTest(path, test);
-            Task.WaitAll(task);
+            Task[] tasks = { task };
+            Task.WaitAny(tasks, 1000);
+            text2.Text = JsonSerializer.Serialize<Test>(test);
             text1.Text=task.ToString();
         }
     }

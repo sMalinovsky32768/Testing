@@ -17,13 +17,14 @@ namespace Testing
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             Settings.Default.number_of_starts++;
+            Settings.Default.Save();
         }
 
-        /*private void Application_Startup(object sender, StartupEventArgs e)
+        private void Application_Startup(object sender, StartupEventArgs e)
         {
             if (Settings.Default.number_of_starts == 0)
             {
-                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\MyTests";
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\MyTests\\";
                 System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(path);
                 if (!dirInfo.Exists)
                 {
@@ -31,6 +32,6 @@ namespace Testing
                 }
                 Settings.Default.defaulf_test_file_save_path = path;
             }
-        }*/
+        }
     }
 }

@@ -18,10 +18,10 @@ namespace Testing
 
     class Test
     {
-        private string TestName { get; set; } // название теста
-        private int Duration { get; set; } // Длительность теста в секундах
-        private List<QuestionWithType> questions = new List<QuestionWithType>();
-        private List<QuestionWithType> Questions
+        public string TestName { get; set; } // название теста
+        public int Duration { get; set; } // Длительность теста в секундах
+        public List<QuestionWithType> questions = new List<QuestionWithType>();
+        public List<QuestionWithType> Questions
         {
             get
             {
@@ -66,7 +66,7 @@ namespace Testing
             saveFileDialog.Filter = "JSON files (*.json)|*.json";*/
             using (FileStream fileStream = new FileStream(filename, FileMode.OpenOrCreate))
             {
-                await JsonSerializer.SerializeAsync<Test>(fileStream, test);
+                await JsonSerializer.SerializeAsync(fileStream, test, test.GetType());
             }
         }
 

@@ -32,6 +32,10 @@ namespace Testing
                 questions = value;
             }
         }
+        public Test()
+        {
+
+        }
 
         public Test(string name, int duration = 3600)
         {
@@ -70,15 +74,27 @@ namespace Testing
             }
         }
 
-        /*public async Task LoadTest(string filename)
+        public Test LoadTest(string filename)
         {
             if (File.Exists(filename))
             {
-                using (FileStream fileStream = new FileStream(filename, FileMode.Open))
+                string temp;
+                /*using (FileStream fileStream = new FileStream(filename, FileMode.Open))
                 {
-                    Test newTest = await JsonSerializer.DeserializeAsync<Test>(fileStream);
+                    temp=Console.ReadLine(fileStream)
+                }*/
+                using (FileStream fileStream = File.OpenRead(filename))
+                {
+                    byte[] array = new byte[fileStream.Length];
+                    // считываем данные
+                    fileStream.Read(array, 0, array.Length);
+                    // декодируем байты в строку
+                    string textFromFile = System.Text.Encoding.Default.GetString(array);
+                    temp = textFromFile;
                 }
+                return JsonSerializer.Deserialize<Test>(temp);
             }
-        }*/
+            return null;
+        }
     }
 }

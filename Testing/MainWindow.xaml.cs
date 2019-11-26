@@ -31,11 +31,12 @@ namespace Testing
                 new AnswerForManyCorrect("2", false), new AnswerForManyCorrect("3", true)));
             test.AddQuestionInputAnswer(new QuestionInputAnswer("Вопрос3", "123"));
             string path = Properties.Settings.Default.defaulf_test_file_save_path + "123.json";
-            Task task = test.SaveTest(path, test);
-            Task[] tasks = { task };
-            Task.WaitAny(tasks, 1000);
+            //Task task = test.SaveTest(path, test);
+            //Task[] tasks = { task };
+            //Task.WaitAny(tasks, 1000);
             text2.Text = JsonSerializer.Serialize<Test>(test);
-            text1.Text=task.ToString();
+            Test t2 = test.LoadTest(path);
+            text1.Text = t2.ToString();
         }
     }
 }

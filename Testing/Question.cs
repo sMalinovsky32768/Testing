@@ -102,6 +102,11 @@ namespace Testing
         public TypeOfQuestion Type { get; set; }
         public object Question { get; set; }
 
+        public QuestionWithType()
+        {
+
+        }
+
         public QuestionWithType(TypeOfQuestion type, object question)
         {
             Type = type;

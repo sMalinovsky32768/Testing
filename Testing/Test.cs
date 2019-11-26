@@ -20,7 +20,18 @@ namespace Testing
     {
         private string TestName { get; set; } // название теста
         private int Duration { get; set; } // Длительность теста в секундах
-        private List<QuestionWithType> Questions { get; set; } // Вопросы
+        private List<QuestionWithType> questions = new List<QuestionWithType>();
+        private List<QuestionWithType> Questions
+        {
+            get
+            {
+                return questions;
+            }
+            set
+            {
+                questions = value;
+            }
+        }
 
         public Test(string name, int duration = 3600)
         {
@@ -30,7 +41,8 @@ namespace Testing
 
         public void AddQuestionOneCorrect(QuestionOneCorrect question)
         {
-            Questions.Add(new QuestionWithType(TypeOfQuestion.oneCorrect, question));
+            QuestionWithType q = new QuestionWithType(TypeOfQuestion.oneCorrect, (object)question);
+            Questions.Add(q);
         }
 
         public void AddQuestionManyCorrect(QuestionManyCorrect question)
@@ -48,13 +60,13 @@ namespace Testing
             Questions.Add(new QuestionWithType(TypeOfQuestion.accordance, question));
         }
 
-        public async Task SaveTest(string filename)
+        public async Task SaveTest(string filename, Test test)
         {
             /*System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             saveFileDialog.Filter = "JSON files (*.json)|*.json";*/
             using (FileStream fileStream = new FileStream(filename, FileMode.OpenOrCreate))
             {
-                await JsonSerializer.SerializeAsync<Test>(fileStream, this);
+                await JsonSerializer.SerializeAsync<Test>(fileStream, test);
             }
         }
 

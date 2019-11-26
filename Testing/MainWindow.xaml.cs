@@ -30,7 +30,9 @@ namespace Testing
                 new AnswerForManyCorrect("2", false), new AnswerForManyCorrect("3", true)));
             test.AddQuestionInputAnswer(new QuestionInputAnswer("Вопрос3", "123"));
             string path = Properties.Settings.Default.defaulf_test_file_save_path + "123.json";
-            Task task = test.SaveTest(path);
+            Task task = test.SaveTest(path, test);
+            Task.WaitAll(task);
+            text1.Text=task.ToString();
         }
     }
 }

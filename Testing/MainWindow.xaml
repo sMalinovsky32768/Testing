@@ -6,5 +6,7 @@
         xmlns:local="clr-namespace:Testing"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid/>
+    <Grid>
+        <TextBox x:Name="text1"></TextBox>
+    </Grid>
 </Window>

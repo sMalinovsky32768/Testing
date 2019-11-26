@@ -19,12 +19,18 @@ namespace Testing
             Settings.Default.number_of_starts++;
         }
 
-        private void Application_Startup(object sender, StartupEventArgs e)
+        /*private void Application_Startup(object sender, StartupEventArgs e)
         {
             if (Settings.Default.number_of_starts == 0)
             {
-                Settings.Default.defaulf_test_file_save_path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\MyTests";
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\MyTests";
+                System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(path);
+                if (!dirInfo.Exists)
+                {
+                    dirInfo.Create();
+                }
+                Settings.Default.defaulf_test_file_save_path = path;
             }
-        }
+        }*/
     }
 }

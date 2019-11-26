@@ -25,7 +25,7 @@ namespace Testing.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\sMali\\Documents\\MyTests")]
         public string defaulf_test_file_save_path {
             get {
                 return ((string)(this["defaulf_test_file_save_path"]));

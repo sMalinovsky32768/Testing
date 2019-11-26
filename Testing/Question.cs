@@ -9,17 +9,27 @@ namespace Testing
     class QuestionOneCorrect
     {
         private string QuestionWording { get; set; } // Формулировка вопроса
-        private List<string> AnswerChoice { get; set; } // Варианты ответа
+        private List<string> answerChoice = new List<string>();
+        private List<string> AnswerChoice
+        {
+            get
+            {
+                return answerChoice;
+            }
+            set
+            {
+                answerChoice = value;
+            }
+        }
         private int Correct { get; set; } // Номер правильного ответа (ключ AnswerChoice)
 
         public QuestionOneCorrect(string question, int correct, params string[] choices)
         {
             QuestionWording = question;
             Correct = correct;
-            AnswerChoice.Clear();
             foreach(string choice in choices)
             {
-                //AnswerChoice.Add(choice);
+                AnswerChoice.Add(choice);
             }
         }
     }
@@ -27,7 +37,18 @@ namespace Testing
     class QuestionManyCorrect
     {
         private string QuestionWording { get; set; } // Формулировка вопроса
-        private List<AnswerForManyCorrect> AnswerChoice { get; set; } // Словарь вариантов ответа с обозначением их правильности
+        private List<AnswerForManyCorrect> answerChoice = new List<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
+        private List<AnswerForManyCorrect> AnswerChoice
+        {
+            get
+            {
+                return answerChoice;
+            }
+            set
+            {
+                answerChoice = value;
+            }
+        }
 
         public QuestionManyCorrect(string question, params AnswerForManyCorrect[] choices)
         {

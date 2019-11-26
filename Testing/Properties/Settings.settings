@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="defaulf_test_file_save_path" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\</Value>
+      <Value Profile="(Default)">C:\Users\sMali\Documents\MyTests</Value>
     </Setting>
     <Setting Name="number_of_starts" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>

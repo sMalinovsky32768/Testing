@@ -42,7 +42,8 @@ namespace Testing
     class QuestionManyCorrect
     {
         public string QuestionWording { get; set; } // Формулировка вопроса
-        public List<AnswerForManyCorrect> answerChoice = new List<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
+        public List<AnswerForManyCorrect> answerChoice = 
+            new List<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
         public List<AnswerForManyCorrect> AnswerChoice
         {
             get

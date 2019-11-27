@@ -24,19 +24,6 @@ namespace Testing
         public MainWindow()
         {
             InitializeComponent();
-            /*Test test = new Test("Пробный тест", 1800);
-            test.AddQuestionOneCorrect(new QuestionOneCorrect("Вопрос1", 0, "1", "2", "3", "4"));
-            test.AddQuestionManyCorrect(new QuestionManyCorrect("Вопрос2", 
-                new AnswerForManyCorrect("0", false), new AnswerForManyCorrect("1", true), 
-                new AnswerForManyCorrect("2", false), new AnswerForManyCorrect("3", true)));
-            test.AddQuestionInputAnswer(new QuestionInputAnswer("Вопрос3", "123"));
-            string path = Properties.Settings.Default.defaulf_test_file_save_path + "123.json";
-            Task task = test.SaveTest(path, test);
-            Task[] tasks = { task };
-            Task.WaitAny(tasks, 1000);
-            text2.Text = JsonSerializer.Serialize<Test>(test);
-            Test t2 = test.LoadTest(path);
-            text1.Text = t2.ToString();*/
         }
     }
 }

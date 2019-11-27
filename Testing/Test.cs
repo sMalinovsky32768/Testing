@@ -78,21 +78,34 @@ namespace Testing
         {
             if (File.Exists(filename))
             {
-                string temp;
-                /*using (FileStream fileStream = new FileStream(filename, FileMode.Open))
+                string temp = "";
+                temp = File.ReadAllText(filename);
+                Test tempTest = new Test();
+                tempTest = JsonSerializer.Deserialize<Test>(temp);
+                QuestionWithType[] tempQuestions = new QuestionWithType[tempTest.Questions.Count];
+                tempTest.Questions.CopyTo(tempQuestions);
+                tempTest.Questions.Clear();
+                foreach(QuestionWithType questionWithType in tempQuestions)
                 {
-                    temp=Console.ReadLine(fileStream)
-                }*/
-                using (FileStream fileStream = File.OpenRead(filename))
-                {
-                    byte[] array = new byte[fileStream.Length];
-                    // считываем данные
-                    fileStream.Read(array, 0, array.Length);
-                    // декодируем байты в строку
-                    string textFromFile = System.Text.Encoding.Default.GetString(array);
-                    temp = textFromFile;
+                    object obj = new object();
+                    switch (questionWithType.Type)
+                    {
+                        case TypeOfQuestion.oneCorrect:
+                            obj = JsonSerializer.Deserialize<QuestionOneCorrect>(questionWithType.Question.ToString());
+                            break;
+                        case TypeOfQuestion.manyCorrect:
+                            obj = JsonSerializer.Deserialize<QuestionManyCorrect>(questionWithType.Question.ToString());
+                            break;
+                        case TypeOfQuestion.inputAnswer:
+                            obj = JsonSerializer.Deserialize<QuestionInputAnswer>(questionWithType.Question.ToString());
+                            break;
+                        case TypeOfQuestion.accordance:
+                            obj = JsonSerializer.Deserialize<QuestionAccordance>(questionWithType.Question.ToString());
+                            break;
+                    }
+                    tempTest.Questions.Add(new QuestionWithType(questionWithType.Type, obj));
                 }
-                return JsonSerializer.Deserialize<Test>(temp);
+                return tempTest;
             }
             return null;
         }

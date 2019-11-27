@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
-        <TextBox x:Name="text1"></TextBox>
+        <!--<TextBox x:Name="text1"></TextBox>
         <TextBox x:Name="text2"></TextBox>
+        <TextBox x:Name="text3"></TextBox>
+        <TextBox x:Name="text4"></TextBox>
+        <TextBox x:Name="text5"></TextBox>-->
     </StackPanel>
 </Window>

@@ -23,6 +23,11 @@ namespace Testing
         }
         public int Correct { get; set; } // Номер правильного ответа (ключ AnswerChoice)
 
+        public QuestionOneCorrect()
+        {
+
+        }
+
         public QuestionOneCorrect(string question, int correct, params string[] choices)
         {
             QuestionWording = question;
@@ -50,6 +55,11 @@ namespace Testing
             }
         }
 
+        public QuestionManyCorrect()
+        {
+
+        }
+
         public QuestionManyCorrect(string question, params AnswerForManyCorrect[] choices)
         {
             QuestionWording = question;
@@ -64,6 +74,11 @@ namespace Testing
     {
         public string QuestionWording { get; set; } // Формулировка вопроса
         public string Answer { get; set; } // Ответ
+
+        public QuestionInputAnswer()
+        {
+
+        }
 
         public QuestionInputAnswer(string question, string answer)
         {
@@ -89,6 +104,11 @@ namespace Testing
     {
         public string Answer { get; set; }
         public Boolean IsCorrect { get; set; }
+
+        public AnswerForManyCorrect()
+        {
+
+        }
 
         public AnswerForManyCorrect(string answer, Boolean isCorrect)
         {

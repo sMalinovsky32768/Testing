@@ -58,5 +58,10 @@ namespace Testing
                 this.Close();
             }
         }
+
+        private void ExitApp(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

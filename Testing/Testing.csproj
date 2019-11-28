@@ -105,6 +105,9 @@
       <DependentUpon>PassingTheTest.xaml</DependentUpon>
     </Compile>
     <Compile Include="Question.cs" />
+    <Compile Include="QuestionPage.xaml.cs">
+      <DependentUpon>QuestionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test.cs" />
     <Compile Include="TestEditor.xaml.cs">
       <DependentUpon>TestEditor.xaml</DependentUpon>
@@ -125,6 +128,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PassingTheTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QuestionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,6 +172,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\delete.ico" />
+    <Resource Include="images\add.ico" />
     <Content Include="Users.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -185,5 +194,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

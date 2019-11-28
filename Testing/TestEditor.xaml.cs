@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,12 +22,40 @@ namespace Testing
     {
         int userID;
         string userName;
+        Test test;
+        ObservableCollection<QuestionPage> questionPages;
 
         public TestEditor(int UID, string UName)
         {
             userID = UID;
             userName = UName;
             InitializeComponent();
+        }
+
+        private void CreateTest(object sender, RoutedEventArgs e)
+        {
+            if (test==null)
+            {
+                test = new Test();
+                questionPages = new ObservableCollection<QuestionPage>();
+                questionsListBox.DataContext = test.Questions;
+                // questionsListBox.ItemsSource = Question.QuestionWording;
+                testProperties.DataContext = test;
+                Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
+                task.Wait(1000);
+            }
+            else
+            {
+                TestEditor editor = new TestEditor(userID, userName);
+                editor.Show();
+                editor.CreateTest((object)editor, new RoutedEventArgs());
+            }
+        }
+
+        private void addQuestionButton_Click(object sender, RoutedEventArgs e)
+        {
+            test.Questions.Add(new QuestionWithType());
+            questionPages.Add(new QuestionPage());
         }
     }
 }

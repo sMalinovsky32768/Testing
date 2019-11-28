@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +21,8 @@ namespace Testing
     {
         public string TestName { get; set; } // название теста
         public int Duration { get; set; } // Длительность теста в секундах
-        public List<QuestionWithType> questions = new List<QuestionWithType>();
-        public List<QuestionWithType> Questions
+        public ObservableCollection<QuestionWithType> questions = new ObservableCollection<QuestionWithType>();
+        public ObservableCollection<QuestionWithType> Questions
         {
             get
             {
@@ -34,7 +35,8 @@ namespace Testing
         }
         public Test()
         {
-
+            TestName = "";
+            Duration = 3600;
         }
 
         public Test(string name, int duration = 3600)
@@ -83,7 +85,7 @@ namespace Testing
                 Test tempTest = new Test();
                 tempTest = JsonSerializer.Deserialize<Test>(temp);
                 QuestionWithType[] tempQuestions = new QuestionWithType[tempTest.Questions.Count];
-                tempTest.Questions.CopyTo(tempQuestions);
+                tempTest.Questions.CopyTo(tempQuestions, 0);
                 tempTest.Questions.Clear();
                 foreach(QuestionWithType questionWithType in tempQuestions)
                 {

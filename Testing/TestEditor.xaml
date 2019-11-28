@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Padding="2">
             <MenuItem Header="Тест">
-                <MenuItem Header="Новый тест"></MenuItem>
+                <MenuItem Header="Новый тест" Click="CreateTest"></MenuItem>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">
@@ -25,7 +25,29 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Вопросы" Padding="5"/>
+                    <Button x:Name="addQuestionButton" Grid.Column="1" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5,0,5,5" Padding="5 1" BorderBrush="{x:Null}" Click="addQuestionButton_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="images/add.ico" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="deleteQuestionButton" Grid.Column="2" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Padding="5 1" BorderBrush="{x:Null}">
+                        <Button.Background>
+                            <ImageBrush ImageSource="images/delete.ico" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+                <ListBox x:Name="questionsListBox" Grid.Row="1" Padding="5"/>
             </Grid>
             <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Center"></GridSplitter>
             <Grid Grid.Column="2">
@@ -35,10 +57,54 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                    <Grid x:Name="testProperties" Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Имя теста" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10 0"/>
+                        <TextBox x:Name="testNameTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" Padding="2">
+                            <TextBox.Text>
+                                <Binding Path="TestName">
+                                    <Binding.ValidationRules>
+                                        <ExceptionValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock Text="Длительность" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="10 0"/>
+                        <TextBox x:Name="durationTextBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5" Padding="2">
+                            <TextBox.Text>
+                                <Binding Path="Duration">
+                                    <Binding.ValidationRules>
+                                        <ExceptionValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </Grid>
+                    <Frame Grid.Row="1" x:Name="questionFrame"/>
                 </Grid>
-                <GridSplitter Grid.Row="1" Height="2" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                <Grid Grid.Row="2">
+                <GridSplitter Grid.Row="1" Height="3" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                <Grid x:Name="previewGrid" Grid.Row="2">
 
                 </Grid>
             </Grid>

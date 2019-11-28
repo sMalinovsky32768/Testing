@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,8 @@ namespace Testing
     class QuestionOneCorrect
     {
         public string QuestionWording { get; set; } // Формулировка вопроса
-        public List<string> answerChoice = new List<string>();
-        public List<string> AnswerChoice
+        public ObservableCollection<string> answerChoice = new ObservableCollection<string>();
+        public ObservableCollection<string> AnswerChoice
         {
             get
             {
@@ -42,9 +43,9 @@ namespace Testing
     class QuestionManyCorrect
     {
         public string QuestionWording { get; set; } // Формулировка вопроса
-        public List<AnswerForManyCorrect> answerChoice = 
-            new List<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
-        public List<AnswerForManyCorrect> AnswerChoice
+        public ObservableCollection<AnswerForManyCorrect> answerChoice = 
+            new ObservableCollection<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
+        public ObservableCollection<AnswerForManyCorrect> AnswerChoice
         {
             get
             {
@@ -91,8 +92,8 @@ namespace Testing
     class QuestionAccordance
     {
         public string QuestionWording { get; set; } // Формулировка вопроса
-        public List<string> AccordanceColunm1 { get; set; }
-        public List<string> AccordanceColunm2 { get; set; }
+        public ObservableCollection<string> AccordanceColunm1 { get; set; }
+        public ObservableCollection<string> AccordanceColunm2 { get; set; }
         public Dictionary<int, int> Accordance { get; set; } // Словарь соответствия AccordanceColumn1 и AccordanceColumn2
 
         public QuestionAccordance()

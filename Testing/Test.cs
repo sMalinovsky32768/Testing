@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Testing
 {
@@ -103,10 +106,51 @@ namespace Testing
         }
     }*/
 
-    class Test2
+    class Test2 : INotifyPropertyChanged
     {
-        public string TestName { get; set; } // название теста
-        public int Duration { get; set; } // Длительность теста в секундах
+        public string testName; // название теста
+        public string TestName
+        {
+            get
+            {
+                return testName;
+            }
+            set
+            {
+                testName = value;
+                OnPropertyChanged("TestName");
+            }
+        }
+
+        public int duration; // Длительность теста в секундах
+        public int Duration
+        {
+            get
+            {
+                return duration;
+            }
+            set
+            {
+                duration = value;
+                OnPropertyChanged("Duration");
+            }
+        }
+
+        private Question selectedQuestion;
+        [JsonIgnore]
+        public Question SelectedQuestion
+        {
+            get
+            {
+                return selectedQuestion;
+            }
+            set
+            {
+                selectedQuestion = value;
+                OnPropertyChanged("SelectedQuestion");
+            }
+        }
+
         public ObservableCollection<Question> questions = new ObservableCollection<Question>();
         public ObservableCollection<Question> Questions
         {
@@ -117,6 +161,7 @@ namespace Testing
             set
             {
                 questions = value;
+                OnPropertyChanged("Questions");
             }
         }
 
@@ -132,7 +177,14 @@ namespace Testing
             Duration = duration;
         }
 
-        public void AddQuestionOneCorrect(string question)
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
+        /*public void AddQuestionOneCorrect(string question)
         {
             Questions.Add(new Question(question, TypeOfQuestion.oneCorrect));
         }
@@ -150,12 +202,10 @@ namespace Testing
         public void AddQuestionAccordance(string question)
         {
             Questions.Add(new Question(question, TypeOfQuestion.accordance));
-        }
+        }*/
 
         public async Task SaveTest(string filename, Test2 test)
         {
-            /*System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            saveFileDialog.Filter = "JSON files (*.json)|*.json";*/
             using (FileStream fileStream = new FileStream(filename, FileMode.OpenOrCreate))
             {
                 JsonSerializerOptions options = new JsonSerializerOptions

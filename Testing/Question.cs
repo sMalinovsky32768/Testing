@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Testing
 {
@@ -15,10 +17,34 @@ namespace Testing
         accordance // соответствие
     }
 
-    class Question
+    class Question : INotifyPropertyChanged
     {
-        public TypeOfQuestion Type { get; set; }
-        public string QuestionWording { get; set; } // Формулировка вопроса
+        public TypeOfQuestion type;
+        public TypeOfQuestion Type
+        {
+            get
+            {
+                return type;
+            }
+            set
+            {
+                type = value;
+                OnPropertyChanged("Type");
+            }
+        }
+        public string questionWording; // Формулировка вопроса
+        public string QuestionWording
+        {
+            get
+            {
+                return questionWording;
+            }
+            set
+            {
+                questionWording = value;
+                OnPropertyChanged("QuestionWording");
+            }
+        }
 
         // oneCorrect
         public ObservableCollection<string> answerChoice = new ObservableCollection<string>();
@@ -31,9 +57,22 @@ namespace Testing
             set
             {
                 answerChoice = value;
+                OnPropertyChanged("AnswerChoice");
             }
         }
-        public int Correct { get; set; } // Номер правильного ответа (ключ AnswerChoice)
+        public int correct; // Номер правильного ответа (ключ AnswerChoice)
+        public int Correct
+        {
+            get
+            {
+                return correct;
+            }
+            set
+            {
+                correct = value;
+                OnPropertyChanged("Correct");
+            }
+        }
 
         // manyCorrect
         public ObservableCollection<AnswerForManyCorrect> answerChoiceMany =
@@ -47,16 +86,65 @@ namespace Testing
             set
             {
                 answerChoiceMany = value;
+                OnPropertyChanged("AnswerChoiceMany");
             }
         }
 
         // inputAnswer
-        public string Answer { get; set; } // Ответ
+        public string answer; // Ответ
+        public string Answer
+        {
+            get
+            {
+                return answer;
+            }
+            set
+            {
+                answer = value;
+                OnPropertyChanged("Answer");
+            }
+        }
 
         // accordance
-        public ObservableCollection<string> AccordanceColunm1 { get; set; }
-        public ObservableCollection<string> AccordanceColunm2 { get; set; }
-        public Dictionary<int, int> Accordance { get; set; } // Словарь соответствия AccordanceColumn1 и AccordanceColumn2
+        public ObservableCollection<string> accordanceColunm1 = new ObservableCollection<string>();
+        public ObservableCollection<string> AccordanceColunm1
+        {
+            get
+            {
+                return accordanceColunm1;
+            }
+            set
+            {
+                accordanceColunm1 = value;
+                OnPropertyChanged("AccordanceColumn1");
+            }
+        }
+        public ObservableCollection<string> accordanceColunm2 = new ObservableCollection<string>();
+        public ObservableCollection<string> AccordanceColunm2
+        {
+            get
+            {
+                return accordanceColunm2;
+            }
+            set
+            {
+                accordanceColunm2 = value;
+                OnPropertyChanged("AccordanceColumn2");
+            }
+        }
+        public Dictionary<int, int> accordance = new Dictionary<int, int>(); // Словарь соответствия AccordanceColumn1 и AccordanceColumn2
+        public Dictionary<int, int> Accordance
+        {
+            get
+            {
+                return accordance;
+            }
+            set
+            {
+                accordance = value;
+                OnPropertyChanged("Accordance");
+            }
+        }
 
         public Question()
         {
@@ -68,12 +156,43 @@ namespace Testing
             QuestionWording = question;
             Type = typeOfQuestion;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 
-    class AnswerForManyCorrect // Класс ответов для вопросов с несколькими правильными ответами
+    class AnswerForManyCorrect : INotifyPropertyChanged // Класс ответов для вопросов с несколькими правильными ответами
     {
-        public string Answer { get; set; }
-        public Boolean IsCorrect { get; set; }
+        public string answer;
+        public string Answer
+        {
+            get
+            {
+                return answer;
+            }
+            set
+            {
+                answer = value;
+                OnPropertyChanged("Answer");
+            }
+        }
+        public Boolean isCorrect;
+        public Boolean IsCorrect
+        {
+            get
+            {
+                return isCorrect;
+            }
+            set
+            {
+                isCorrect = value;
+                OnPropertyChanged("IsCorrect");
+            }
+        }
 
         public AnswerForManyCorrect()
         {
@@ -85,9 +204,16 @@ namespace Testing
             Answer = answer;
             IsCorrect = isCorrect;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 
-    class QuestionOneCorrect
+    /*class QuestionOneCorrect
     {
         public string QuestionWording { get; set; } // Формулировка вопроса
         public ObservableCollection<string> answerChoice = new ObservableCollection<string>();
@@ -197,5 +323,5 @@ namespace Testing
             Type = type;
             Question = question;
         }
-    }
+    }*/
 }

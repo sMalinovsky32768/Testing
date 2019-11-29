@@ -9,15 +9,7 @@ using System.Text.Json;
 
 namespace Testing
 {
-    enum TypeOfQuestion
-    {
-        oneCorrect, // один правильный ответ
-        manyCorrect, // несколько пправильных ответов
-        inputAnswer, // ответ вводится с клавиатуры
-        accordance // соответствие
-    }
-
-    class Test
+    /*class Test
     {
         public string TestName { get; set; } // название теста
         public int Duration { get; set; } // Длительность теста в секундах
@@ -68,8 +60,6 @@ namespace Testing
 
         public async Task SaveTest(string filename, Test test)
         {
-            /*System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            saveFileDialog.Filter = "JSON files (*.json)|*.json";*/
             using (FileStream fileStream = new FileStream(filename, FileMode.OpenOrCreate))
             {
                 await JsonSerializer.SerializeAsync(fileStream, test, test.GetType());
@@ -107,6 +97,83 @@ namespace Testing
                     }
                     tempTest.Questions.Add(new QuestionWithType(questionWithType.Type, obj));
                 }
+                return tempTest;
+            }
+            return null;
+        }
+    }*/
+
+    class Test2
+    {
+        public string TestName { get; set; } // название теста
+        public int Duration { get; set; } // Длительность теста в секундах
+        public ObservableCollection<Question> questions = new ObservableCollection<Question>();
+        public ObservableCollection<Question> Questions
+        {
+            get
+            {
+                return questions;
+            }
+            set
+            {
+                questions = value;
+            }
+        }
+
+        public Test2()
+        {
+            TestName = "";
+            Duration = 3600;
+        }
+
+        public Test2(string name, int duration = 3600)
+        {
+            TestName = name;
+            Duration = duration;
+        }
+
+        public void AddQuestionOneCorrect(string question)
+        {
+            Questions.Add(new Question(question, TypeOfQuestion.oneCorrect));
+        }
+
+        public void AddQuestionManyCorrect(string question)
+        {
+            Questions.Add(new Question(question, TypeOfQuestion.manyCorrect));
+        }
+
+        public void AddQuestionInputAnswer(string question)
+        {
+            Questions.Add(new Question(question, TypeOfQuestion.inputAnswer));
+        }
+
+        public void AddQuestionAccordance(string question)
+        {
+            Questions.Add(new Question(question, TypeOfQuestion.accordance));
+        }
+
+        public async Task SaveTest(string filename, Test2 test)
+        {
+            /*System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            saveFileDialog.Filter = "JSON files (*.json)|*.json";*/
+            using (FileStream fileStream = new FileStream(filename, FileMode.OpenOrCreate))
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    IgnoreNullValues = true
+                };
+                await JsonSerializer.SerializeAsync(fileStream, test, test.GetType(), options);
+            }
+        }
+
+        public Test2 LoadTest(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                string temp = "";
+                temp = File.ReadAllText(filename);
+                Test2 tempTest = new Test2();
+                tempTest = JsonSerializer.Deserialize<Test2>(temp);
                 return tempTest;
             }
             return null;

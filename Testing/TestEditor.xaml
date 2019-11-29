@@ -24,7 +24,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
+            <Grid x:Name="listGrid" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>
@@ -47,7 +47,13 @@
                         </Button.Background>
                     </Button>
                 </Grid>
-                <ListBox x:Name="questionsListBox" Grid.Row="1" Padding="5"/>
+                <ListBox x:Name="questionsListBox" Grid.Row="1" Padding="5" ItemsSource="{Binding Path=Questions}" SelectionChanged="questionsListBox_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Question.QuestionWording}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
             <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Center"></GridSplitter>
             <Grid Grid.Column="2">

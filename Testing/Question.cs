@@ -7,6 +7,86 @@ using System.Threading.Tasks;
 
 namespace Testing
 {
+    enum TypeOfQuestion
+    {
+        oneCorrect, // один правильный ответ
+        manyCorrect, // несколько пправильных ответов
+        inputAnswer, // ответ вводится с клавиатуры
+        accordance // соответствие
+    }
+
+    class Question
+    {
+        public TypeOfQuestion Type { get; set; }
+        public string QuestionWording { get; set; } // Формулировка вопроса
+
+        // oneCorrect
+        public ObservableCollection<string> answerChoice = new ObservableCollection<string>();
+        public ObservableCollection<string> AnswerChoice
+        {
+            get
+            {
+                return answerChoice;
+            }
+            set
+            {
+                answerChoice = value;
+            }
+        }
+        public int Correct { get; set; } // Номер правильного ответа (ключ AnswerChoice)
+
+        // manyCorrect
+        public ObservableCollection<AnswerForManyCorrect> answerChoiceMany =
+            new ObservableCollection<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
+        public ObservableCollection<AnswerForManyCorrect> AnswerChoiceMany
+        {
+            get
+            {
+                return answerChoiceMany;
+            }
+            set
+            {
+                answerChoiceMany = value;
+            }
+        }
+
+        // inputAnswer
+        public string Answer { get; set; } // Ответ
+
+        // accordance
+        public ObservableCollection<string> AccordanceColunm1 { get; set; }
+        public ObservableCollection<string> AccordanceColunm2 { get; set; }
+        public Dictionary<int, int> Accordance { get; set; } // Словарь соответствия AccordanceColumn1 и AccordanceColumn2
+
+        public Question()
+        {
+
+        }
+        
+        public Question(string question, TypeOfQuestion typeOfQuestion)
+        {
+            QuestionWording = question;
+            Type = typeOfQuestion;
+        }
+    }
+
+    class AnswerForManyCorrect // Класс ответов для вопросов с несколькими правильными ответами
+    {
+        public string Answer { get; set; }
+        public Boolean IsCorrect { get; set; }
+
+        public AnswerForManyCorrect()
+        {
+
+        }
+
+        public AnswerForManyCorrect(string answer, Boolean isCorrect)
+        {
+            Answer = answer;
+            IsCorrect = isCorrect;
+        }
+    }
+
     class QuestionOneCorrect
     {
         public string QuestionWording { get; set; } // Формулировка вопроса
@@ -99,23 +179,6 @@ namespace Testing
         public QuestionAccordance()
         {
 
-        }
-    }
-
-    class AnswerForManyCorrect // Класс ответов для вопросов с несколькими правильными ответами
-    {
-        public string Answer { get; set; }
-        public Boolean IsCorrect { get; set; }
-
-        public AnswerForManyCorrect()
-        {
-
-        }
-
-        public AnswerForManyCorrect(string answer, Boolean isCorrect)
-        {
-            Answer = answer;
-            IsCorrect = isCorrect;
         }
     }
 

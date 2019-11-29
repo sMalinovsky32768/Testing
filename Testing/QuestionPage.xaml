@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="100"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="Тип вопроса:" Padding="5" Margin="5"/>
@@ -26,6 +26,19 @@
                 <ComboBoxItem x:Name="accordance">Соответствие</ComboBoxItem>
             </ComboBox>
         </Grid>
-        <Frame Grid.Row="1" x:Name="questionTypeFrame"/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Вопрос:" Padding="5" Margin="5"/>
+                <TextBox Grid.Column="1" Text="{Binding Path=QuestionWording}" Padding="5" Margin="10 5"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

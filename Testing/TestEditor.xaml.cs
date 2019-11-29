@@ -22,7 +22,7 @@ namespace Testing
     {
         int userID;
         string userName;
-        Test test;
+        Test2 test;
         ObservableCollection<QuestionPage> questionPages;
 
         public TestEditor(int UID, string UName)
@@ -36,13 +36,12 @@ namespace Testing
         {
             if (test==null)
             {
-                test = new Test();
+                test = new Test2();
                 questionPages = new ObservableCollection<QuestionPage>();
-                questionsListBox.DataContext = test.Questions;
-                // questionsListBox.ItemsSource = Question.QuestionWording;
+                questionsListBox.DataContext = test;
                 testProperties.DataContext = test;
-                Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
-                task.Wait(1000);
+                /*Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
+                task.Wait(1000);*/
             }
             else
             {
@@ -54,8 +53,14 @@ namespace Testing
 
         private void addQuestionButton_Click(object sender, RoutedEventArgs e)
         {
-            test.Questions.Add(new QuestionWithType());
+            test.Questions.Add(new Question());
             questionPages.Add(new QuestionPage());
+            questionPages[questionPages.Count].DataContext = test.Questions[test.Questions.Count];
+        }
+
+        private void questionsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

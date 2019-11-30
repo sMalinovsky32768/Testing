@@ -16,7 +16,7 @@
                 <MenuItem Header="Новый тест" Click="CreateTest"></MenuItem>
             </MenuItem>
         </Menu>
-        <Grid Grid.Row="1">
+        <Grid x:Name="testGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
@@ -36,26 +36,31 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Вопросы" Padding="5"/>
-                    <Button x:Name="addQuestionButton" Grid.Column="1" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5,0,5,5" Padding="5 1" BorderBrush="{x:Null}" Click="addQuestionButton_Click">
+                    <Button x:Name="addQuestionButton" Grid.Column="1" Width="20" Height="20" 
+                            HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5,0,5,5" Padding="5 1" BorderBrush="{x:Null}" 
+                            Command="{Binding AddCommand}">
                         <Button.Background>
                             <ImageBrush ImageSource="images/add.ico" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="deleteQuestionButton" Grid.Column="2" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Padding="5 1" BorderBrush="{x:Null}">
+                    <Button x:Name="deleteQuestionButton" Grid.Column="2" Width="20" Height="20" 
+                            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Padding="5 1" BorderBrush="{x:Null}" 
+                            Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedQuestion}">
                         <Button.Background>
                             <ImageBrush ImageSource="images/delete.ico" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
                 </Grid>
-                <ListBox x:Name="questionsListBox" Grid.Row="1" Padding="5" ItemsSource="{Binding Path=Questions}" SelectionChanged="questionsListBox_SelectionChanged">
+                <ListBox x:Name="questionsListBox" Grid.Row="1" Padding="5" ItemsSource="{Binding Path=Questions, UpdateSourceTrigger=PropertyChanged}" 
+                         SelectedItem="SelectedQuestion" SelectionChanged="questionsListBox_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=Question.QuestionWording}"/>
+                            <TextBlock Text="{Binding Path=Question.QuestionWording, UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </Grid>
-            <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Center"></GridSplitter>
+            <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Center"/>
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" MinHeight="250"/>
@@ -89,7 +94,7 @@
                         <TextBlock Text="Имя теста" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10 0"/>
                         <TextBox x:Name="testNameTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" Padding="2">
                             <TextBox.Text>
-                                <Binding Path="TestName">
+                                <Binding Path="TestName" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <ExceptionValidationRule/>
                                     </Binding.ValidationRules>
@@ -99,7 +104,7 @@
                         <TextBlock Text="Длительность" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="10 0"/>
                         <TextBox x:Name="durationTextBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5" Padding="2">
                             <TextBox.Text>
-                                <Binding Path="Duration">
+                                <Binding Path="Duration" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <ExceptionValidationRule/>
                                     </Binding.ValidationRules>
@@ -107,14 +112,92 @@
                             </TextBox.Text>
                         </TextBox>
                     </Grid>
-                    <Frame Grid.Row="1" x:Name="questionFrame"/>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid x:Name="selectedQuestionEdit">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Тип вопроса:" Padding="5" Margin="5"/>
+                            <ComboBox Grid.Column="1" x:Name="typeQuestionComboBox" Padding="2" Margin="5" SelectedIndex="0">
+                                <ComboBoxItem x:Name="oneCorrect">Один ответ</ComboBoxItem>
+                                <ComboBoxItem x:Name="manyCorrect">Несколько ответов</ComboBoxItem>
+                                <ComboBoxItem x:Name="inputAnswer">Ввод ответа  с клавиатуры</ComboBoxItem>
+                                <ComboBoxItem x:Name="accordance">Соответствие</ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Вопрос:" Padding="5" Margin="5"/>
+                                <TextBox Grid.Column="1" Text="{Binding Path=QuestionWording, UpdateSourceTrigger=PropertyChanged}" 
+                                         Padding="2" Margin="5"/>
+                            </Grid>
+                            <Grid Grid.Row="1" DataContext="{Binding Path=SelectedQuestion}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <ListBox ItemsSource="{Binding Path=AnswerChoice, UpdateSourceTrigger=PropertyChanged}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Path=string, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!--Кнопки добавить/удалить ответ-->
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="addAnswerButton" Width="20" Height="20" 
+                                                HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                                                Margin="5,0,5,5" Padding="5 1" BorderBrush="{x:Null}">
+                                            <Button.Background>
+                                                <ImageBrush ImageSource="images/add.ico" Stretch="Uniform"/>
+                                            </Button.Background>
+                                        </Button>
+                                        <Button x:Name="deleteAnswerButton" Width="20" Height="20" 
+                                                HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                Margin="5" Padding="5 1" BorderBrush="{x:Null}">
+                                            <Button.Background>
+                                                <ImageBrush ImageSource="images/delete.ico" Stretch="Uniform"/>
+                                            </Button.Background>
+                                        </Button>
+                                    </StackPanel>
+                                    <TextBox Grid.Column="1" Margin="5">
+                                        <TextBox.Text>
+                                            <Binding Path="Correct">
+                                                <Binding.ValidationRules>
+                                                    <ExceptionValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <GridSplitter Grid.Row="1" Height="3" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                 <Grid x:Name="previewGrid" Grid.Row="2">
 
                 </Grid>
             </Grid>
-            <GridSplitter Grid.Column="3" Width="2" HorizontalAlignment="Center"></GridSplitter>
+            <GridSplitter Grid.Column="3" Width="2" HorizontalAlignment="Center"/>
             <Grid Grid.Column="4">
 
             </Grid>

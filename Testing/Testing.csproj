@@ -109,6 +109,7 @@
       <DependentUpon>QuestionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Test.cs" />
+    <Compile Include="TestCommand.cs" />
     <Compile Include="TestEditor.xaml.cs">
       <DependentUpon>TestEditor.xaml</DependentUpon>
     </Compile>

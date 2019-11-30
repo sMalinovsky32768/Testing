@@ -12,101 +12,7 @@ using System.Runtime.CompilerServices;
 
 namespace Testing
 {
-    /*class Test
-    {
-        public string TestName { get; set; } // название теста
-        public int Duration { get; set; } // Длительность теста в секундах
-        public ObservableCollection<QuestionWithType> questions = new ObservableCollection<QuestionWithType>();
-        public ObservableCollection<QuestionWithType> Questions
-        {
-            get
-            {
-                return questions;
-            }
-            set
-            {
-                questions = value;
-            }
-        }
-        public Test()
-        {
-            TestName = "";
-            Duration = 3600;
-        }
-
-        public Test(string name, int duration = 3600)
-        {
-            TestName = name;
-            Duration = duration;
-        }
-
-        public void AddQuestionOneCorrect(QuestionOneCorrect question)
-        {
-            QuestionWithType q = new QuestionWithType(TypeOfQuestion.oneCorrect, (object)question);
-            Questions.Add(q);
-        }
-
-        public void AddQuestionManyCorrect(QuestionManyCorrect question)
-        {
-            Questions.Add(new QuestionWithType(TypeOfQuestion.manyCorrect, question));
-        }
-
-        public void AddQuestionInputAnswer(QuestionInputAnswer question)
-        {
-            Questions.Add(new QuestionWithType(TypeOfQuestion.inputAnswer, question));
-        }
-
-        public void AddQuestionAccordance(QuestionAccordance question)
-        {
-            Questions.Add(new QuestionWithType(TypeOfQuestion.accordance, question));
-        }
-
-        public async Task SaveTest(string filename, Test test)
-        {
-            using (FileStream fileStream = new FileStream(filename, FileMode.OpenOrCreate))
-            {
-                await JsonSerializer.SerializeAsync(fileStream, test, test.GetType());
-            }
-        }
-
-        public Test LoadTest(string filename)
-        {
-            if (File.Exists(filename))
-            {
-                string temp = "";
-                temp = File.ReadAllText(filename);
-                Test tempTest = new Test();
-                tempTest = JsonSerializer.Deserialize<Test>(temp);
-                QuestionWithType[] tempQuestions = new QuestionWithType[tempTest.Questions.Count];
-                tempTest.Questions.CopyTo(tempQuestions, 0);
-                tempTest.Questions.Clear();
-                foreach(QuestionWithType questionWithType in tempQuestions)
-                {
-                    object obj = new object();
-                    switch (questionWithType.Type)
-                    {
-                        case TypeOfQuestion.oneCorrect:
-                            obj = JsonSerializer.Deserialize<QuestionOneCorrect>(questionWithType.Question.ToString());
-                            break;
-                        case TypeOfQuestion.manyCorrect:
-                            obj = JsonSerializer.Deserialize<QuestionManyCorrect>(questionWithType.Question.ToString());
-                            break;
-                        case TypeOfQuestion.inputAnswer:
-                            obj = JsonSerializer.Deserialize<QuestionInputAnswer>(questionWithType.Question.ToString());
-                            break;
-                        case TypeOfQuestion.accordance:
-                            obj = JsonSerializer.Deserialize<QuestionAccordance>(questionWithType.Question.ToString());
-                            break;
-                    }
-                    tempTest.Questions.Add(new QuestionWithType(questionWithType.Type, obj));
-                }
-                return tempTest;
-            }
-            return null;
-        }
-    }*/
-
-    class Test2 : INotifyPropertyChanged
+    class Test : INotifyPropertyChanged
     {
         public string testName; // название теста
         public string TestName
@@ -165,13 +71,13 @@ namespace Testing
             }
         }
 
-        public Test2()
+        public Test()
         {
             TestName = "";
             Duration = 3600;
         }
 
-        public Test2(string name, int duration = 3600)
+        public Test(string name, int duration = 3600)
         {
             TestName = name;
             Duration = duration;
@@ -182,6 +88,39 @@ namespace Testing
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
+        private TestCommand addCommand;
+        public TestCommand AddCommand
+        {
+            get
+            {
+                return addCommand ??
+                  (addCommand = new TestCommand(obj =>
+                  {
+                      Question tempQuestion = new Question();
+                      Questions.Insert(0, tempQuestion);
+                      SelectedQuestion = tempQuestion;
+                  }));
+            }
+        }
+
+        private TestCommand removeCommand;
+        public TestCommand RemoveCommand
+        {
+            get
+            {
+                return removeCommand ??
+                  (removeCommand = new TestCommand(obj =>
+                  {
+                      Question tempQuestion = obj as Question;
+                      if (tempQuestion != null)
+                      {
+                          Questions.Remove(tempQuestion);
+                      }
+                  },
+                 (obj) => Questions.Count > 0));
+            }
         }
 
         /*public void AddQuestionOneCorrect(string question)
@@ -204,7 +143,7 @@ namespace Testing
             Questions.Add(new Question(question, TypeOfQuestion.accordance));
         }*/
 
-        public async Task SaveTest(string filename, Test2 test)
+        public async Task SaveTest(string filename, Test test)
         {
             using (FileStream fileStream = new FileStream(filename, FileMode.OpenOrCreate))
             {
@@ -216,14 +155,14 @@ namespace Testing
             }
         }
 
-        public Test2 LoadTest(string filename)
+        public Test LoadTest(string filename)
         {
             if (File.Exists(filename))
             {
                 string temp = "";
                 temp = File.ReadAllText(filename);
-                Test2 tempTest = new Test2();
-                tempTest = JsonSerializer.Deserialize<Test2>(temp);
+                Test tempTest = new Test();
+                tempTest = JsonSerializer.Deserialize<Test>(temp);
                 return tempTest;
             }
             return null;

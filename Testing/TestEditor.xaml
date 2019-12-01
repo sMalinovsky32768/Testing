@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Testing"
         mc:Ignorable="d"
-        Title="TestEditor" Height="450" Width="800">
+        Title="TestEditor" Height="450" Width="800" Closed="Window_Closed">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -52,10 +53,10 @@
                     </Button>
                 </Grid>
                 <ListBox x:Name="questionsListBox" Grid.Row="1" Padding="5" ItemsSource="{Binding Path=Questions, UpdateSourceTrigger=PropertyChanged}" 
-                         SelectedItem="SelectedQuestion" SelectionChanged="questionsListBox_SelectionChanged">
+                         SelectedItem="SelectedQuestion">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=Question.QuestionWording, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding Path=QuestionWording, UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -65,7 +66,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" MinHeight="250"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.RowDefinitions>
@@ -141,7 +142,7 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Вопрос:" Padding="5" Margin="5"/>
-                                <TextBox Grid.Column="1" Text="{Binding Path=QuestionWording, UpdateSourceTrigger=PropertyChanged}" 
+                                <TextBox Grid.Column="1" Text="{Binding Path=SelectedQuestion.QuestionWording, UpdateSourceTrigger=PropertyChanged}" 
                                          Padding="2" Margin="5"/>
                             </Grid>
                             <Grid Grid.Row="1" DataContext="{Binding Path=SelectedQuestion}">
@@ -149,10 +150,10 @@
                                     <RowDefinition/>
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
-                                <ListBox ItemsSource="{Binding Path=AnswerChoice, UpdateSourceTrigger=PropertyChanged}">
+                                <ListBox x:Name="AnswerList" ItemsSource="{Binding Path=SelectedQuestion.AnswerChoice, UpdateSourceTrigger=PropertyChanged}">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBox Text="{Binding Path=string, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <TextBox MinWidth="100"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
@@ -165,14 +166,16 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Button x:Name="addAnswerButton" Width="20" Height="20" 
                                                 HorizontalAlignment="Center" VerticalAlignment="Bottom" 
-                                                Margin="5,0,5,5" Padding="5 1" BorderBrush="{x:Null}">
+                                                Margin="5,0,5,5" Padding="5 1" BorderBrush="{x:Null}" 
+                                                Command="{Binding AddCommandForOneCorrect}">
                                             <Button.Background>
                                                 <ImageBrush ImageSource="images/add.ico" Stretch="Uniform"/>
                                             </Button.Background>
                                         </Button>
                                         <Button x:Name="deleteAnswerButton" Width="20" Height="20" 
                                                 HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                                Margin="5" Padding="5 1" BorderBrush="{x:Null}">
+                                                Margin="5" Padding="5 1" BorderBrush="{x:Null}" 
+                                                Command="{Binding RemoveCommandForOneCorrect}"  CommandParameter="{Binding SelectedItem, ElementName=AnswerList}">
                                             <Button.Background>
                                                 <ImageBrush ImageSource="images/delete.ico" Stretch="Uniform"/>
                                             </Button.Background>

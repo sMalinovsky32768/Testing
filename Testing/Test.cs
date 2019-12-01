@@ -91,6 +91,7 @@ namespace Testing
         }
 
         private TestCommand addCommand;
+        [JsonIgnore]
         public TestCommand AddCommand
         {
             get
@@ -99,13 +100,15 @@ namespace Testing
                   (addCommand = new TestCommand(obj =>
                   {
                       Question tempQuestion = new Question();
-                      Questions.Insert(0, tempQuestion);
-                      SelectedQuestion = tempQuestion;
+                      Questions.Insert(Questions.Count, tempQuestion);
+                      SelectedQuestion = Questions[Questions.Count - 1];
+                      // SelectedQuestion = tempQuestion;
                   }));
             }
         }
 
         private TestCommand removeCommand;
+        [JsonIgnore]
         public TestCommand RemoveCommand
         {
             get
@@ -120,6 +123,41 @@ namespace Testing
                       }
                   },
                  (obj) => Questions.Count > 0));
+            }
+        }
+
+        private TestCommand addCommandForOneCorrect;
+        [JsonIgnore]
+        public TestCommand AddCommandForOneCorrect
+        {
+            get
+            {
+                return addCommandForOneCorrect ??
+                  (addCommandForOneCorrect = new TestCommand(obj =>
+                  {
+                      string tempAnswer = "";
+                      SelectedQuestion.AnswerChoice.Insert(SelectedQuestion.AnswerChoice.Count, tempAnswer);
+                      // SelectedQuestion = tempQuestion;
+                  }));
+            }
+        }
+
+        private TestCommand removeCommandForOneCorrect;
+        [JsonIgnore]
+        public TestCommand RemoveCommandForOneCorrect
+        {
+            get
+            {
+                return removeCommandForOneCorrect ??
+                  (removeCommandForOneCorrect = new TestCommand(obj =>
+                  {
+                      string tempAnswer = obj as string;
+                      if (tempAnswer != null)
+                      {
+                          SelectedQuestion.AnswerChoice.Remove(tempAnswer);
+                      }
+                  },
+                 (obj) => SelectedQuestion.AnswerChoice.Count > 0));
             }
         }
 

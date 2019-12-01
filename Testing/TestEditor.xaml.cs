@@ -55,9 +55,10 @@ namespace Testing
             // questionPages[questionPages.Count - 1].DataContext = test.Questions[test.Questions.Count - 1];
         }
 
-        private void questionsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Window_Closed(object sender, EventArgs e)
         {
-
+            Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
+            task.Wait(1000);
         }
     }
 }

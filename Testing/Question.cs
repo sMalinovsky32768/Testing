@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace Testing
 {
@@ -74,6 +75,41 @@ namespace Testing
             }
         }
 
+        /*private TestCommand addCommandForOneCorrect;
+        [JsonIgnore]
+        public TestCommand AddCommandForOneCorrect
+        {
+            get
+            {
+                return addCommandForOneCorrect ??
+                  (addCommandForOneCorrect = new TestCommand(obj =>
+                  {
+                      string tempAnswer = "";
+                      AnswerChoice.Insert(AnswerChoice.Count, tempAnswer);
+                      // SelectedQuestion = tempQuestion;
+                  }));
+            }
+        }
+
+        private TestCommand removeCommandForOneCorrect;
+        [JsonIgnore]
+        public TestCommand RemoveCommandForOneCorrect
+        {
+            get
+            {
+                return removeCommandForOneCorrect ??
+                  (removeCommandForOneCorrect = new TestCommand(obj =>
+                  {
+                      string tempAnswer = obj as string;
+                      if (tempAnswer != null)
+                      {
+                          AnswerChoice.Remove(tempAnswer);
+                      }
+                  },
+                 (obj) => AnswerChoice.Count > 0));
+            }
+        }*/
+
         // manyCorrect
         public ObservableCollection<AnswerForManyCorrect> answerChoiceMany =
             new ObservableCollection<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
@@ -106,7 +142,7 @@ namespace Testing
         }
 
         // accordance
-        public ObservableCollection<string> accordanceColunm1 = new ObservableCollection<string>();
+        /*public ObservableCollection<string> accordanceColunm1 = new ObservableCollection<string>();
         public ObservableCollection<string> AccordanceColunm1
         {
             get
@@ -144,7 +180,7 @@ namespace Testing
                 accordance = value;
                 OnPropertyChanged("Accordance");
             }
-        }
+        }*/
 
         public Question()
         {

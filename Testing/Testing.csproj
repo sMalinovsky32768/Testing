@@ -116,6 +116,7 @@
     <Compile Include="TestSelection.xaml.cs">
       <DependentUpon>TestSelection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TypeOfQuestionToIntConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

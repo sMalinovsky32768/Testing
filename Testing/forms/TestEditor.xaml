@@ -52,14 +52,14 @@
                             HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5,0,5,5" Padding="5 1" 
                             BorderBrush="{x:Null}" Command="{Binding AddCommand}">
                         <Button.Background>
-                            <ImageBrush ImageSource="images/add.ico" Stretch="Uniform"/>
+                            <ImageBrush ImageSource="../images/add.ico" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
                     <Button x:Name="deleteQuestionButton" Grid.Column="2" Width="20" Height="20" 
                             HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Padding="5 1" BorderBrush="{x:Null}" 
                             Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedQuestion}">
                         <Button.Background>
-                            <ImageBrush ImageSource="images/delete.ico" Stretch="Uniform"/>
+                            <ImageBrush ImageSource="../images/delete.ico" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
                 </Grid>
@@ -234,7 +234,7 @@
                                                 </Style.Triggers>
                                             </Style>
                                             <Button.Background>
-                                                <ImageBrush ImageSource="images/add.ico" Stretch="Uniform"/>
+                                                <ImageBrush ImageSource="../images/add.ico" Stretch="Uniform"/>
                                             </Button.Background>
                                         </Button>
                                         <Button x:Name="deleteAnswerButton" Width="20" Height="20" 
@@ -257,7 +257,7 @@
                                                 </Style.Triggers>
                                             </Style>
                                             <Button.Background>
-                                                <ImageBrush ImageSource="images/delete.ico" Stretch="Uniform"/>
+                                                <ImageBrush ImageSource="../images/delete.ico" Stretch="Uniform"/>
                                             </Button.Background>
                                         </Button>
                                     </StackPanel>

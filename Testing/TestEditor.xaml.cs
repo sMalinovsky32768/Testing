@@ -29,6 +29,19 @@ namespace Testing
             userID = UID;
             userName = UName;
             InitializeComponent();
+            if (test == null)
+            {
+                test = new Test();
+                testGrid.DataContext = test;
+                /*Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
+                task.Wait(1000);*/
+            }
+            else
+            {
+                TestEditor editor = new TestEditor(userID, userName);
+                editor.Show();
+                editor.CreateTest((object)editor, new RoutedEventArgs());
+            }
         }
 
         private void CreateTest(object sender, RoutedEventArgs e)

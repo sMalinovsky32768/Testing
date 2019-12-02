@@ -25,6 +25,7 @@
         <Menu Grid.Row="0" Padding="2">
             <MenuItem Header="Тест">
                 <MenuItem Header="Новый тест" Click="CreateTest"></MenuItem>
+                <MenuItem Header="Открыть тест" Click="LoadTest"></MenuItem>
             </MenuItem>
         </Menu>
         <Grid x:Name="testGrid" Grid.Row="1">

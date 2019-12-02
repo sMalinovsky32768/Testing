@@ -101,22 +101,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="PassingTheTest.xaml.cs">
+    <Compile Include="forms\PassingTheTest.xaml.cs">
       <DependentUpon>PassingTheTest.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Question.cs" />
-    <Compile Include="QuestionPage.xaml.cs">
+    <Compile Include="model\Question.cs" />
+    <Compile Include="forms\QuestionPage.xaml.cs">
       <DependentUpon>QuestionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Test.cs" />
-    <Compile Include="TestCommand.cs" />
-    <Compile Include="TestEditor.xaml.cs">
+    <Compile Include="model\Test.cs" />
+    <Compile Include="model\TestCommand.cs" />
+    <Compile Include="forms\TestEditor.xaml.cs">
       <DependentUpon>TestEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestSelection.xaml.cs">
+    <Compile Include="forms\TestSelection.xaml.cs">
       <DependentUpon>TestSelection.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TypeOfQuestionToIntConverter.cs" />
+    <Compile Include="model\TypeOfQuestionToIntConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -129,19 +129,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PassingTheTest.xaml">
+    <Page Include="forms\PassingTheTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="QuestionPage.xaml">
+    <Page Include="forms\QuestionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestEditor.xaml">
+    <Page Include="forms\TestEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestSelection.xaml">
+    <Page Include="forms\TestSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

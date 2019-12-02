@@ -73,5 +73,10 @@ namespace Testing
             Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
             task.Wait(1000);
         }
+
+        private void LoadTest(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

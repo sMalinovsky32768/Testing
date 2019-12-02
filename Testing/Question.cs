@@ -21,6 +21,8 @@ namespace Testing
     class Question : INotifyPropertyChanged
     {
         public TypeOfQuestion type;
+        public string questionWording; // Формулировка вопроса
+
         public TypeOfQuestion Type
         {
             get
@@ -33,7 +35,6 @@ namespace Testing
                 OnPropertyChanged("Type");
             }
         }
-        public string questionWording; // Формулировка вопроса
         public string QuestionWording
         {
             get
@@ -48,8 +49,10 @@ namespace Testing
         }
 
         // oneCorrect
-        public ObservableCollection<string> answerChoice = new ObservableCollection<string>();
-        public ObservableCollection<string> AnswerChoice
+        public ObservableCollection<AnswerForOneCorrect> answerChoice = new ObservableCollection<AnswerForOneCorrect>();
+        public int correct; // Номер правильного ответа (ключ AnswerChoice)
+
+        public ObservableCollection<AnswerForOneCorrect> AnswerChoice
         {
             get
             {
@@ -61,7 +64,6 @@ namespace Testing
                 OnPropertyChanged("AnswerChoice");
             }
         }
-        public int correct; // Номер правильного ответа (ключ AnswerChoice)
         public int Correct
         {
             get
@@ -191,6 +193,40 @@ namespace Testing
         {
             QuestionWording = question;
             Type = typeOfQuestion;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+    }
+
+    class AnswerForOneCorrect : INotifyPropertyChanged // Класс ответов для вопросов с несколькими правильными ответами
+    {
+        public string answer;
+        public string Answer
+        {
+            get
+            {
+                return answer;
+            }
+            set
+            {
+                answer = value;
+                OnPropertyChanged("Answer");
+            }
+        }
+
+        public AnswerForOneCorrect()
+        {
+
+        }
+
+        public AnswerForOneCorrect(string answer)
+        {
+            Answer = answer;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -56,7 +56,7 @@
                          SelectedItem="SelectedQuestion">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=QuestionWording, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding Path=SelectedQuestion.QuestionWording, UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -113,7 +113,7 @@
                             </TextBox.Text>
                         </TextBox>
                     </Grid>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1" DataContext="{Binding Path=SelectedQuestion, UpdateSourceTrigger=PropertyChanged}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition/>
@@ -124,7 +124,7 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Тип вопроса:" Padding="5" Margin="5"/>
-                            <ComboBox Grid.Column="1" x:Name="typeQuestionComboBox" Padding="2" Margin="5" SelectedIndex="0">
+                            <ComboBox Grid.Column="1" x:Name="typeQuestionComboBox" Padding="2" Margin="5" SelectedIndex="{Binding Path=Type}">
                                 <ComboBoxItem x:Name="oneCorrect">Один ответ</ComboBoxItem>
                                 <ComboBoxItem x:Name="manyCorrect">Несколько ответов</ComboBoxItem>
                                 <ComboBoxItem x:Name="inputAnswer">Ввод ответа  с клавиатуры</ComboBoxItem>
@@ -145,37 +145,95 @@
                                 <TextBox Grid.Column="1" Text="{Binding Path=SelectedQuestion.QuestionWording, UpdateSourceTrigger=PropertyChanged}" 
                                          Padding="2" Margin="5"/>
                             </Grid>
-                            <Grid Grid.Row="1" DataContext="{Binding Path=SelectedQuestion}">
+                            <Grid Grid.Row="1" DataContext="{Binding Path=SelectedQuestion, UpdateSourceTrigger=PropertyChanged}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
-                                <ListBox x:Name="AnswerList" ItemsSource="{Binding Path=SelectedQuestion.AnswerChoice, UpdateSourceTrigger=PropertyChanged}">
-                                    <ListBox.ItemTemplate>
+                                <ListBox x:Name="answerList">
+                                    <DataTrigger Binding="{Binding ElementName=typeQuestionComboBox, Path=SelectedIndex}" Value="0">
+                                        <Setter TargetName="answerList" Property="ListBox.ItemsSource" 
+                                                            Value="{Binding Path=SelectedQuestion.AnswerChoice, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <!--<Setter Property="ListBox.ItemTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBox x:Name="answerForOne" Text="{Binding Path=Answer}" MinWidth="100" Visibility="Collapsed"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>-->
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=typeQuestionComboBox, Path=SelectedIndex}" Value="1">
+                                        <Setter TargetName="answerList" Property="ListBox.ItemsSource" 
+                                                            Value="{Binding Path=SelectedQuestion.AnswerChoiceMany, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <!--<Setter Property="ListBox.ItemTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <CheckBox x:Name="answerForMany" IsChecked="{Binding Path=IsCorrect}" Visibility="Collapsed">
+                                                        <TextBox MinWidth="100" Text="{Binding Path=Answer}"/>
+                                                    </CheckBox>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>-->
+                                    </DataTrigger>
+                                    <!----><ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBox MinWidth="100"/>
+                                            <StackPanel>
+                                                <TextBox x:Name="answerForOne" Text="{Binding Path=Answer}" MinWidth="100" Visibility="Collapsed"/>
+                                                <!--<CheckBox x:Name="answerForMany" IsChecked="{Binding Path=IsCorrect}" Visibility="Collapsed">
+                                                    <TextBox MinWidth="100" Text="{Binding Path=Answer}"/>
+                                                </CheckBox>-->
+                                            </StackPanel>
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=typeQuestionComboBox, Path=SelectedIndex}" Value="0">
+                                                    <Setter TargetName="answerForOne" Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                                <!--<DataTrigger Binding="{Binding ElementName=typeQuestionComboBox, Path=SelectedIndex}" Value="1">
+                                                    <Setter TargetName="answerForMany" Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>-->
+                                            </DataTemplate.Triggers>
                                         </DataTemplate>
-                                    </ListBox.ItemTemplate>
+                                    </ListBox.ItemTemplate><!---->
                                 </ListBox>
                                 <Grid Grid.Row="1">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <!--Кнопки добавить/удалить ответ-->
                                     <StackPanel Orientation="Horizontal">
                                         <Button x:Name="addAnswerButton" Width="20" Height="20" 
                                                 HorizontalAlignment="Center" VerticalAlignment="Bottom" 
-                                                Margin="5,0,5,5" Padding="5 1" BorderBrush="{x:Null}" 
-                                                Command="{Binding AddCommandForOneCorrect}">
+                                                Margin="5,0,5,5" Padding="5 1" BorderBrush="{x:Null}">
+                                            <Style>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=typeQuestionComboBox, Path=SelectedIndex}" Value="0">
+                                                        <Setter Property="Button.Command" Value="{Binding AddCommandForOneCorrect}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=typeQuestionComboBox, Path=SelectedIndex}" Value="1">
+                                                        <Setter Property="Button.Command" Value="{Binding AddCommandForManyCorrect}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
                                             <Button.Background>
                                                 <ImageBrush ImageSource="images/add.ico" Stretch="Uniform"/>
                                             </Button.Background>
                                         </Button>
                                         <Button x:Name="deleteAnswerButton" Width="20" Height="20" 
                                                 HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                                Margin="5" Padding="5 1" BorderBrush="{x:Null}" 
-                                                Command="{Binding RemoveCommandForOneCorrect}"  CommandParameter="{Binding SelectedItem, ElementName=AnswerList}">
+                                                Margin="5" Padding="5 1" BorderBrush="{x:Null}">
+                                            <Style>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=typeQuestionComboBox, Path=SelectedIndex}" Value="0">
+                                                        <Setter Property="Button.Command" 
+                                                        Value="{Binding RemoveCommandForOneCorrect}"/>
+                                                        <Setter Property="Button.CommandParameter" Value="{Binding SelectedItem, ElementName=AnswerList}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=typeQuestionComboBox, Path=SelectedIndex}" Value="1">
+                                                        <Setter Property="Button.Command" 
+                                                        Value="{Binding RemoveCommandForManyCorrect}"/>
+                                                        <Setter Property="Button.CommandParameter" Value="{Binding SelectedItem, ElementName=AnswerList}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
                                             <Button.Background>
                                                 <ImageBrush ImageSource="images/delete.ico" Stretch="Uniform"/>
                                             </Button.Background>

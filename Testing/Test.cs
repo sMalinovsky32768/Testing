@@ -15,6 +15,10 @@ namespace Testing
     class Test : INotifyPropertyChanged
     {
         public string testName; // название теста
+        public int duration; // Длительность теста в секундах
+        private Question selectedQuestion;
+        public ObservableCollection<Question> questions = new ObservableCollection<Question>();
+
         public string TestName
         {
             get
@@ -28,7 +32,6 @@ namespace Testing
             }
         }
 
-        public int duration; // Длительность теста в секундах
         public int Duration
         {
             get
@@ -42,7 +45,6 @@ namespace Testing
             }
         }
 
-        private Question selectedQuestion;
         [JsonIgnore]
         public Question SelectedQuestion
         {
@@ -57,7 +59,6 @@ namespace Testing
             }
         }
 
-        public ObservableCollection<Question> questions = new ObservableCollection<Question>();
         public ObservableCollection<Question> Questions
         {
             get
@@ -135,7 +136,7 @@ namespace Testing
                 return addCommandForOneCorrect ??
                   (addCommandForOneCorrect = new TestCommand(obj =>
                   {
-                      string tempAnswer = "";
+                      AnswerForOneCorrect tempAnswer = new AnswerForOneCorrect();
                       SelectedQuestion.AnswerChoice.Insert(SelectedQuestion.AnswerChoice.Count, tempAnswer);
                       // SelectedQuestion = tempQuestion;
                   }));
@@ -151,13 +152,48 @@ namespace Testing
                 return removeCommandForOneCorrect ??
                   (removeCommandForOneCorrect = new TestCommand(obj =>
                   {
-                      string tempAnswer = obj as string;
+                      AnswerForOneCorrect tempAnswer = obj as AnswerForOneCorrect;
                       if (tempAnswer != null)
                       {
                           SelectedQuestion.AnswerChoice.Remove(tempAnswer);
                       }
                   },
                  (obj) => SelectedQuestion.AnswerChoice.Count > 0));
+            }
+        }
+
+        private TestCommand addCommandForManyCorrect;
+        [JsonIgnore]
+        public TestCommand AddCommandForManyCorrect
+        {
+            get
+            {
+                return addCommandForManyCorrect ??
+                  (addCommandForManyCorrect = new TestCommand(obj =>
+                  {
+                      AnswerForManyCorrect tempAnswer = new AnswerForManyCorrect();
+                      SelectedQuestion.AnswerChoiceMany.Insert(SelectedQuestion.AnswerChoice.Count, tempAnswer);
+                      // SelectedQuestion = tempQuestion;
+                  }));
+            }
+        }
+
+        private TestCommand removeCommandForManyCorrect;
+        [JsonIgnore]
+        public TestCommand RemoveCommandForManyCorrect
+        {
+            get
+            {
+                return removeCommandForManyCorrect ??
+                  (removeCommandForManyCorrect = new TestCommand(obj =>
+                  {
+                      AnswerForManyCorrect tempAnswer = obj as AnswerForManyCorrect;
+                      if (tempAnswer != null)
+                      {
+                          SelectedQuestion.AnswerChoiceMany.Remove(tempAnswer);
+                      }
+                  },
+                 (obj) => SelectedQuestion.AnswerChoiceMany.Count > 0));
             }
         }
 

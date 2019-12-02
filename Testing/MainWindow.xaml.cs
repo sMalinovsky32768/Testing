@@ -38,7 +38,7 @@ namespace Testing
         {
             string user = loginTextBox.Text;
             string group = groupTextBox.Text;
-            string pass = passTextBox.Text;
+            string pass = passTextBox.Password;
             string sql = "select [User].id as id, [User].[name] as [name], [group].[name] as [group] from [User] inner join [group] on [group].[id]=[User].[group] Where [User].[name]=N'" + user + "' and [User].[pass]=N'" + pass + "' and [group].[name]=N'" + group + "'";
             usersTable = new DataTable();
             SqlConnection connection = new SqlConnection(connectionString);

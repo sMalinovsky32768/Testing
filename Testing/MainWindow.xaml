@@ -6,7 +6,8 @@
         xmlns:sql="clr-namespace:System.Data.SqlClient;assembly=System.Data"
         xmlns:local="clr-namespace:Testing"
         mc:Ignorable="d"
-        Title="Авторизация" Height="250" Width="400" ResizeMode="NoResize" FontSize="14" FocusManager.FocusedElement="{Binding ElementName=loginTextBox}">
+        Title="Авторизация" Height="250" Width="400" ResizeMode="NoResize" FontSize="14" 
+        FocusManager.FocusedElement="{Binding ElementName=loginTextBox}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="151*"/>

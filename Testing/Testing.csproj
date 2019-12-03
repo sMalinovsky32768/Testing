@@ -176,11 +176,15 @@
   <ItemGroup>
     <Resource Include="images\delete.ico" />
     <Resource Include="images\add.ico" />
+    <SplashScreen Include="images\splashScreen.jpg" />
     <Content Include="Users.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Users.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Users_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>Users.mdf</DependentUpon>
     </Content>
   </ItemGroup>

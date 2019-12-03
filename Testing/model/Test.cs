@@ -18,6 +18,7 @@ namespace Testing
         public int duration; // Длительность теста в секундах
         private Question selectedQuestion;
         public ObservableCollection<Question> questions = new ObservableCollection<Question>();
+        private int incId = 0;
 
         public string TestName
         {
@@ -100,7 +101,8 @@ namespace Testing
                 return addCommand ??
                   (addCommand = new TestCommand(obj =>
                   {
-                      Question tempQuestion = new Question();
+                      Question tempQuestion = new Question() { Id = incId };
+                      incId++;
                       Questions.Insert(Questions.Count, tempQuestion);
                       SelectedQuestion = Questions[Questions.Count - 1];
                       // SelectedQuestion = tempQuestion;
@@ -127,7 +129,7 @@ namespace Testing
             }
         }
 
-        private TestCommand addCommandForOneCorrect;
+        /*private TestCommand addCommandForOneCorrect;
         [JsonIgnore]
         public TestCommand AddCommandForOneCorrect
         {
@@ -137,6 +139,7 @@ namespace Testing
                   (addCommandForOneCorrect = new TestCommand(obj =>
                   {
                       AnswerForOneCorrect tempAnswer = new AnswerForOneCorrect();
+                      // Questions[SelectedQuestion.Id].AnswerChoice.Insert(SelectedQuestion.AnswerChoice.Count, tempAnswer);
                       SelectedQuestion.AnswerChoice.Insert(SelectedQuestion.AnswerChoice.Count, tempAnswer);
                       // SelectedQuestion = tempQuestion;
                   }));
@@ -195,7 +198,7 @@ namespace Testing
                   },
                  (obj) => SelectedQuestion.AnswerChoiceMany.Count > 0));
             }
-        }
+        }*/
 
         /*public void AddQuestionOneCorrect(string question)
         {

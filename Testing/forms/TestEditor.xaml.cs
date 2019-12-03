@@ -70,13 +70,21 @@ namespace Testing
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
-            task.Wait(1000);
+            if (test != null)
+            {
+                Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
+                task.Wait(1000);
+            }
         }
 
         private void LoadTest(object sender, RoutedEventArgs e)
         {
-
+            if (test != null)
+            {
+                Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
+                task.Wait(1000);
+            }
+            test = test.LoadTest(Properties.Settings.Default.defaulf_test_file_save_path + "qwerty.json");
         }
     }
 }

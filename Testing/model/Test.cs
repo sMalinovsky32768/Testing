@@ -129,104 +129,14 @@ namespace Testing
             }
         }
 
-        /*private TestCommand addCommandForOneCorrect;
-        [JsonIgnore]
-        public TestCommand AddCommandForOneCorrect
-        {
-            get
-            {
-                return addCommandForOneCorrect ??
-                  (addCommandForOneCorrect = new TestCommand(obj =>
-                  {
-                      AnswerForOneCorrect tempAnswer = new AnswerForOneCorrect();
-                      // Questions[SelectedQuestion.Id].AnswerChoice.Insert(SelectedQuestion.AnswerChoice.Count, tempAnswer);
-                      SelectedQuestion.AnswerChoice.Insert(SelectedQuestion.AnswerChoice.Count, tempAnswer);
-                      // SelectedQuestion = tempQuestion;
-                  }));
-            }
-        }
-
-        private TestCommand removeCommandForOneCorrect;
-        [JsonIgnore]
-        public TestCommand RemoveCommandForOneCorrect
-        {
-            get
-            {
-                return removeCommandForOneCorrect ??
-                  (removeCommandForOneCorrect = new TestCommand(obj =>
-                  {
-                      AnswerForOneCorrect tempAnswer = obj as AnswerForOneCorrect;
-                      if (tempAnswer != null)
-                      {
-                          SelectedQuestion.AnswerChoice.Remove(tempAnswer);
-                      }
-                  },
-                 (obj) => SelectedQuestion.AnswerChoice.Count > 0));
-            }
-        }
-
-        private TestCommand addCommandForManyCorrect;
-        [JsonIgnore]
-        public TestCommand AddCommandForManyCorrect
-        {
-            get
-            {
-                return addCommandForManyCorrect ??
-                  (addCommandForManyCorrect = new TestCommand(obj =>
-                  {
-                      AnswerForManyCorrect tempAnswer = new AnswerForManyCorrect();
-                      SelectedQuestion.AnswerChoiceMany.Insert(SelectedQuestion.AnswerChoice.Count, tempAnswer);
-                      // SelectedQuestion = tempQuestion;
-                  }));
-            }
-        }
-
-        private TestCommand removeCommandForManyCorrect;
-        [JsonIgnore]
-        public TestCommand RemoveCommandForManyCorrect
-        {
-            get
-            {
-                return removeCommandForManyCorrect ??
-                  (removeCommandForManyCorrect = new TestCommand(obj =>
-                  {
-                      AnswerForManyCorrect tempAnswer = obj as AnswerForManyCorrect;
-                      if (tempAnswer != null)
-                      {
-                          SelectedQuestion.AnswerChoiceMany.Remove(tempAnswer);
-                      }
-                  },
-                 (obj) => SelectedQuestion.AnswerChoiceMany.Count > 0));
-            }
-        }*/
-
-        /*public void AddQuestionOneCorrect(string question)
-        {
-            Questions.Add(new Question(question, TypeOfQuestion.oneCorrect));
-        }
-
-        public void AddQuestionManyCorrect(string question)
-        {
-            Questions.Add(new Question(question, TypeOfQuestion.manyCorrect));
-        }
-
-        public void AddQuestionInputAnswer(string question)
-        {
-            Questions.Add(new Question(question, TypeOfQuestion.inputAnswer));
-        }
-
-        public void AddQuestionAccordance(string question)
-        {
-            Questions.Add(new Question(question, TypeOfQuestion.accordance));
-        }*/
-
         public async Task SaveTest(string filename, Test test)
         {
             using (FileStream fileStream = new FileStream(filename, FileMode.OpenOrCreate))
             {
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
-                    IgnoreNullValues = true
+                    IgnoreNullValues = true,
+                    WriteIndented = true,
                 };
                 await JsonSerializer.SerializeAsync(fileStream, test, test.GetType(), options);
             }
@@ -239,7 +149,12 @@ namespace Testing
                 string temp = "";
                 temp = File.ReadAllText(filename);
                 Test tempTest = new Test();
-                tempTest = JsonSerializer.Deserialize<Test>(temp);
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    IgnoreNullValues = true,
+                    WriteIndented = true,
+                };
+                tempTest = JsonSerializer.Deserialize<Test>(temp, options);
                 return tempTest;
             }
             return null;

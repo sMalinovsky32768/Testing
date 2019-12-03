@@ -101,9 +101,7 @@ namespace Testing
                   (addCommandForOneCorrect = new TestCommand(obj =>
                   {
                       AnswerForOneCorrect tempAnswer = new AnswerForOneCorrect();
-                      // Questions[SelectedQuestion.Id].AnswerChoice.Insert(SelectedQuestion.AnswerChoice.Count, tempAnswer);
                       AnswerChoice.Insert(AnswerChoice.Count, tempAnswer);
-                      // SelectedQuestion = tempQuestion;
                   }));
             }
         }
@@ -137,8 +135,7 @@ namespace Testing
                   (addCommandForManyCorrect = new TestCommand(obj =>
                   {
                       AnswerForManyCorrect tempAnswer = new AnswerForManyCorrect();
-                      AnswerChoiceMany.Insert(AnswerChoice.Count, tempAnswer);
-                      // SelectedQuestion = tempQuestion;
+                      AnswerChoiceMany.Insert(AnswerChoiceMany.Count, tempAnswer);
                   }));
             }
         }

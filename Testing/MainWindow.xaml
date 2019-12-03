@@ -28,12 +28,12 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Логин" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
-            <TextBox Grid.Row="0" Grid.Column="1" x:Name="loginTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="loginTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5" Text="root"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Группа" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
-            <TextBox Grid.Row="1" Grid.Column="1" x:Name="groupTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="groupTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5" Text="admin"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Пароль" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
             <!--<TextBox Grid.Row="2" Grid.Column="1" x:Name="passTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5"/>-->
-            <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="passTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
+            <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="passTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5" Password="root"/>
         </Grid>
         <Button x:Name="authorizationButton" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Click="AuthorizationButton_Click" IsDefault="True" Grid.ColumnSpan="2">Авторизоваться</Button>
         <Button x:Name="exitButton" Grid.Row="1" Click="ExitApp" IsCancel="True" Visibility="Collapsed" Grid.ColumnSpan="2"/>

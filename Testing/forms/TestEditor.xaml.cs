@@ -72,8 +72,9 @@ namespace Testing
         {
             if (test != null)
             {
-                Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
-                task.Wait(1000);
+                test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
+                // Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
+                // task.Wait(1000);
             }
         }
 
@@ -81,10 +82,11 @@ namespace Testing
         {
             if (test != null)
             {
-                Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
-                task.Wait(1000);
+                test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
+                // Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
+                // task.Wait(1000);
             }
-            test = test.LoadTest(Properties.Settings.Default.defaulf_test_file_save_path + "qwerty.json");
+            test = test.LoadTest(Properties.Settings.Default.defaulf_test_file_save_path + "12345.json");
         }
     }
 }

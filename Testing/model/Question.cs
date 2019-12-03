@@ -64,6 +64,7 @@ namespace Testing
 
         // oneCorrect
         public ObservableCollection<AnswerForOneCorrect> answerChoice = new ObservableCollection<AnswerForOneCorrect>();
+        // public List<AnswerForOneCorrect> answerChoice = new List<AnswerForOneCorrect>();
         public int correct; // Номер правильного ответа (ключ AnswerChoice)
 
         public ObservableCollection<AnswerForOneCorrect> AnswerChoice
@@ -78,6 +79,18 @@ namespace Testing
                 OnPropertyChanged("AnswerChoice");
             }
         }
+        /*public List<AnswerForOneCorrect> AnswerChoice
+        {
+            get
+            {
+                return answerChoice;
+            }
+            set
+            {
+                answerChoice = value;
+                OnPropertyChanged("AnswerChoice");
+            }
+        }*/
         public int Correct
         {
             get
@@ -125,6 +138,36 @@ namespace Testing
             }
         }
 
+        // manyCorrect
+        public ObservableCollection<AnswerForManyCorrect> answerChoiceMany =
+            new ObservableCollection<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
+        public ObservableCollection<AnswerForManyCorrect> AnswerChoiceMany
+        {
+            get
+            {
+                return answerChoiceMany;
+            }
+            set
+            {
+                answerChoiceMany = value;
+                OnPropertyChanged("AnswerChoiceMany");
+            }
+        }
+        /*public List<AnswerForManyCorrect> answerChoiceMany =
+            new List<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
+        public List<AnswerForManyCorrect> AnswerChoiceMany
+        {
+            get
+            {
+                return answerChoiceMany;
+            }
+            set
+            {
+                answerChoiceMany = value;
+                OnPropertyChanged("AnswerChoiceMany");
+            }
+        }*/
+
         private TestCommand addCommandForManyCorrect;
         [JsonIgnore]
         public TestCommand AddCommandForManyCorrect
@@ -156,22 +199,6 @@ namespace Testing
                       }
                   },
                  (obj) => AnswerChoiceMany.Count > 0));
-            }
-        }
-
-        // manyCorrect
-        public ObservableCollection<AnswerForManyCorrect> answerChoiceMany =
-            new ObservableCollection<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
-        public ObservableCollection<AnswerForManyCorrect> AnswerChoiceMany
-        {
-            get
-            {
-                return answerChoiceMany;
-            }
-            set
-            {
-                answerChoiceMany = value;
-                OnPropertyChanged("AnswerChoiceMany");
             }
         }
 

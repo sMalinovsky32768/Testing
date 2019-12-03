@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.Encodings.Web;
+//using Newtonsoft.Json.Serialization;
+//using Newtonsoft.Json;
 
 namespace Testing
 {
@@ -17,7 +21,8 @@ namespace Testing
         public string testName; // название теста
         public int duration; // Длительность теста в секундах
         private Question selectedQuestion;
-        public ObservableCollection<Question> questions = new ObservableCollection<Question>();
+        public ObservableCollection<Question> questions = new ObservableCollection<Question>(new List<Question>());
+        // public List<Question> questions = new List<Question>();
         private int incId = 0;
 
         public string TestName
@@ -59,7 +64,7 @@ namespace Testing
                 OnPropertyChanged("SelectedQuestion");
             }
         }
-
+        
         public ObservableCollection<Question> Questions
         {
             get
@@ -72,6 +77,19 @@ namespace Testing
                 OnPropertyChanged("Questions");
             }
         }
+
+        /*public List<Question> Questions
+        {
+            get
+            {
+                return questions;
+            }
+            set
+            {
+                questions = value;
+                OnPropertyChanged("Questions");
+            }
+        }*/
 
         public Test()
         {
@@ -129,17 +147,14 @@ namespace Testing
             }
         }
 
-        public async Task SaveTest(string filename, Test test)
+        public void SaveTest(string filename, Test test)
         {
-            using (FileStream fileStream = new FileStream(filename, FileMode.OpenOrCreate))
+            JsonSerializerOptions options = new JsonSerializerOptions
             {
-                JsonSerializerOptions options = new JsonSerializerOptions
-                {
-                    IgnoreNullValues = true,
-                    WriteIndented = true,
-                };
-                await JsonSerializer.SerializeAsync(fileStream, test, test.GetType(), options);
-            }
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.Cyrillic, UnicodeRanges.GreekExtended),
+            };
+            // options.Converters.Add(ObservableCollectionConverter);
+            File.WriteAllText(filename, JsonSerializer.Serialize<Test>(test, options));
         }
 
         public Test LoadTest(string filename)
@@ -151,10 +166,13 @@ namespace Testing
                 Test tempTest = new Test();
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
-                    IgnoreNullValues = true,
-                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Cyrillic, UnicodeRanges.GreekExtended),
+                    /*IgnoreNullValues = true,
+                    WriteIndented = true,*/
                 };
-                tempTest = JsonSerializer.Deserialize<Test>(temp, options);
+                // tempTest = JsonSerializer.Deserialize<Test>(temp, options);
+                // tempTest = (Test)JsonSerializer.Deserialize(temp, tempTest.GetType(), options);
+                tempTest = (Test)JsonSerializer.Deserialize<object>(temp, options);
                 return tempTest;
             }
             return null;

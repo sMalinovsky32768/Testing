@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Forms;
 
 namespace Testing
 {
@@ -29,19 +18,6 @@ namespace Testing
             userID = UID;
             userName = UName;
             InitializeComponent();
-            if (test == null)
-            {
-                test = new Test();
-                testGrid.DataContext = test;
-                /*Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
-                task.Wait(1000);*/
-            }
-            else
-            {
-                TestEditor editor = new TestEditor(userID, userName);
-                editor.Show();
-                editor.CreateTest((object)editor, new RoutedEventArgs());
-            }
         }
 
         private void CreateTest(object sender, RoutedEventArgs e)
@@ -50,8 +26,6 @@ namespace Testing
             {
                 test = new Test();
                 testGrid.DataContext = test;
-                /*Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
-                task.Wait(1000);*/
             }
             else
             {
@@ -61,20 +35,16 @@ namespace Testing
             }
         }
 
-        private void addQuestionButton_Click(object sender, RoutedEventArgs e)
-        {
-            test.Questions.Add(new Question());
-            // questionPages.Add(new QuestionPage());
-            // questionPages[questionPages.Count - 1].DataContext = test.Questions[test.Questions.Count - 1];
-        }
-
         private void Window_Closed(object sender, EventArgs e)
         {
             if (test != null)
             {
-                test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
-                // Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
-                // task.Wait(1000);
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "JSON|*.json";
+                saveFileDialog.InitialDirectory = Properties.Settings.Default.defaulf_test_file_save_path;
+                if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+                    return;
+                test.SaveTest(saveFileDialog.FileName);
             }
         }
 
@@ -82,11 +52,16 @@ namespace Testing
         {
             if (test != null)
             {
-                test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
-                // Task task = test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json", test);
-                // task.Wait(1000);
+                test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json");
             }
-            test = test.LoadTest(Properties.Settings.Default.defaulf_test_file_save_path + "12345.json");
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON|*.json";
+            openFileDialog.InitialDirectory = Properties.Settings.Default.defaulf_test_file_save_path;
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+                return;
+            test = new Test();
+            test = test.LoadTest(openFileDialog.FileName);
+            testGrid.DataContext = test;
         }
     }
 }

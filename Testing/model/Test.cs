@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Text.Unicode;
-using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.Encodings.Web;
-//using Newtonsoft.Json.Serialization;
-//using Newtonsoft.Json;
 
 namespace Testing
 {
@@ -22,7 +16,6 @@ namespace Testing
         public int duration; // Длительность теста в секундах
         private Question selectedQuestion;
         public ObservableCollection<Question> questions = new ObservableCollection<Question>(new List<Question>());
-        // public List<Question> questions = new List<Question>();
         private int incId = 0;
 
         public string TestName
@@ -78,19 +71,6 @@ namespace Testing
             }
         }
 
-        /*public List<Question> Questions
-        {
-            get
-            {
-                return questions;
-            }
-            set
-            {
-                questions = value;
-                OnPropertyChanged("Questions");
-            }
-        }*/
-
         public Test()
         {
             TestName = "";
@@ -123,7 +103,6 @@ namespace Testing
                       incId++;
                       Questions.Insert(Questions.Count, tempQuestion);
                       SelectedQuestion = Questions[Questions.Count - 1];
-                      // SelectedQuestion = tempQuestion;
                   }));
             }
         }
@@ -147,14 +126,14 @@ namespace Testing
             }
         }
 
-        public void SaveTest(string filename, Test test)
+        public void SaveTest(string filename)
         {
             JsonSerializerOptions options = new JsonSerializerOptions
             {
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.Cyrillic, UnicodeRanges.GreekExtended),
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                WriteIndented = true,
             };
-            // options.Converters.Add(ObservableCollectionConverter);
-            File.WriteAllText(filename, JsonSerializer.Serialize<Test>(test, options));
+            File.WriteAllText(filename, JsonSerializer.Serialize<Test>(this, options));
         }
 
         public Test LoadTest(string filename)
@@ -164,18 +143,43 @@ namespace Testing
                 string temp = "";
                 temp = File.ReadAllText(filename);
                 Test tempTest = new Test();
+                TestForDeserialize testForDeserialize = new TestForDeserialize();
                 JsonSerializerOptions options = new JsonSerializerOptions
                 {
-                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Cyrillic, UnicodeRanges.GreekExtended),
-                    /*IgnoreNullValues = true,
-                    WriteIndented = true,*/
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
                 };
-                // tempTest = JsonSerializer.Deserialize<Test>(temp, options);
-                // tempTest = (Test)JsonSerializer.Deserialize(temp, tempTest.GetType(), options);
-                tempTest = (Test)JsonSerializer.Deserialize<object>(temp, options);
+                testForDeserialize = JsonSerializer.Deserialize<TestForDeserialize>(temp, options);
+                tempTest.TestName = testForDeserialize.TestName;
+                tempTest.Duration = testForDeserialize.Duration;
+                foreach(QuestionForDeserialize q in testForDeserialize.Questions)
+                {
+                    Question question = new Question();
+                    question.Type = q.Type;
+                    question.QuestionWording = q.QuestionWording;
+                    question.Answer = q.Answer;
+                    question.Correct = q.Correct;
+                    question.AnswerChoice = new ObservableCollection<AnswerForOneCorrect>(q.AnswerChoice);
+                    question.AnswerChoiceMany = new ObservableCollection<AnswerForManyCorrect>(q.AnswerChoiceMany);
+                    tempTest.Questions.Add(question);
+                }
+                tempTest.SelectedQuestion = tempTest.Questions[tempTest.Questions.Count - 1];
                 return tempTest;
             }
             return null;
+        }
+    }
+
+    class TestForDeserialize
+    {
+        public string TestName { get; set; }
+
+        public int Duration { get; set; }
+
+        public List<QuestionForDeserialize> Questions { get; set; } = new List<QuestionForDeserialize>();
+
+        public TestForDeserialize()
+        {
+            
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
@@ -64,7 +61,6 @@ namespace Testing
 
         // oneCorrect
         public ObservableCollection<AnswerForOneCorrect> answerChoice = new ObservableCollection<AnswerForOneCorrect>();
-        // public List<AnswerForOneCorrect> answerChoice = new List<AnswerForOneCorrect>();
         public int correct; // Номер правильного ответа (ключ AnswerChoice)
 
         public ObservableCollection<AnswerForOneCorrect> AnswerChoice
@@ -79,18 +75,7 @@ namespace Testing
                 OnPropertyChanged("AnswerChoice");
             }
         }
-        /*public List<AnswerForOneCorrect> AnswerChoice
-        {
-            get
-            {
-                return answerChoice;
-            }
-            set
-            {
-                answerChoice = value;
-                OnPropertyChanged("AnswerChoice");
-            }
-        }*/
+        
         public int Correct
         {
             get
@@ -153,20 +138,6 @@ namespace Testing
                 OnPropertyChanged("AnswerChoiceMany");
             }
         }
-        /*public List<AnswerForManyCorrect> answerChoiceMany =
-            new List<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
-        public List<AnswerForManyCorrect> AnswerChoiceMany
-        {
-            get
-            {
-                return answerChoiceMany;
-            }
-            set
-            {
-                answerChoiceMany = value;
-                OnPropertyChanged("AnswerChoiceMany");
-            }
-        }*/
 
         private TestCommand addCommandForManyCorrect;
         [JsonIgnore]
@@ -274,6 +245,66 @@ namespace Testing
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+    }
+
+    class QuestionForDeserialize
+    {
+        [JsonIgnore]
+        public int Id { get; set; }
+
+        public TypeOfQuestion Type { get; set; }
+        public string QuestionWording { get; set; }
+
+        public List<AnswerForOneCorrect> AnswerChoice { get; set; } = new List<AnswerForOneCorrect>();
+        public int Correct { get; set; }
+        public List<AnswerForManyCorrect> AnswerChoiceMany { get; set; } = new List<AnswerForManyCorrect>();
+        public string Answer { get; set; }
+
+        // accordance
+        /*public ObservableCollection<string> accordanceColunm1 = new ObservableCollection<string>();
+        public ObservableCollection<string> AccordanceColunm1
+        {
+            get
+            {
+                return accordanceColunm1;
+            }
+            set
+            {
+                accordanceColunm1 = value;
+                OnPropertyChanged("AccordanceColumn1");
+            }
+        }
+        public ObservableCollection<string> accordanceColunm2 = new ObservableCollection<string>();
+        public ObservableCollection<string> AccordanceColunm2
+        {
+            get
+            {
+                return accordanceColunm2;
+            }
+            set
+            {
+                accordanceColunm2 = value;
+                OnPropertyChanged("AccordanceColumn2");
+            }
+        }
+        public Dictionary<int, int> accordance = new Dictionary<int, int>(); // Словарь соответствия AccordanceColumn1 и AccordanceColumn2
+        public Dictionary<int, int> Accordance
+        {
+            get
+            {
+                return accordance;
+            }
+            set
+            {
+                accordance = value;
+                OnPropertyChanged("Accordance");
+            }
+        }*/
+
+        public QuestionForDeserialize()
+        {
+
         }
     }
 

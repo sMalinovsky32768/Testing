@@ -107,11 +107,7 @@
     <Compile Include="forms\PassingTheTest.xaml.cs">
       <DependentUpon>PassingTheTest.xaml</DependentUpon>
     </Compile>
-    <Compile Include="model\ObservableCollectionConverter.cs" />
     <Compile Include="model\Question.cs" />
-    <Compile Include="forms\QuestionPage.xaml.cs">
-      <DependentUpon>QuestionPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="model\Test.cs" />
     <Compile Include="model\TestCommand.cs" />
     <Compile Include="forms\TestEditor.xaml.cs">
@@ -134,10 +130,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="forms\PassingTheTest.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="forms\QuestionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

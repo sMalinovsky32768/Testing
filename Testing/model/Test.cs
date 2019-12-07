@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.Encodings.Web;
+using Testing.Properties;
 
 namespace Testing
 {
@@ -126,22 +127,24 @@ namespace Testing
             }
         }
 
-        public void SaveTest(string filename)
+        public void SaveTest(string fileName)
         {
             JsonSerializerOptions options = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
                 WriteIndented = true,
             };
-            File.WriteAllText(filename, JsonSerializer.Serialize<Test>(this, options));
+            File.WriteAllText(fileName, JsonSerializer.Serialize<Test>(this, options));
+            Settings.Default.list_of_tests.Add(this.TestName, fileName);
+            Settings.Default.Save();
         }
 
-        public Test LoadTest(string filename)
+        public Test LoadTest(string fileName)
         {
-            if (File.Exists(filename))
+            if (File.Exists(fileName))
             {
                 string temp = "";
-                temp = File.ReadAllText(filename);
+                temp = File.ReadAllText(fileName);
                 Test tempTest = new Test();
                 TestForDeserialize testForDeserialize = new TestForDeserialize();
                 JsonSerializerOptions options = new JsonSerializerOptions

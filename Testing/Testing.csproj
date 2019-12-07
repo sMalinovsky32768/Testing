@@ -107,6 +107,9 @@
     <Compile Include="forms\PassingTheTest.xaml.cs">
       <DependentUpon>PassingTheTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="forms\TestManagement.xaml.cs">
+      <DependentUpon>TestManagement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="model\Question.cs" />
     <Compile Include="model\Test.cs" />
     <Compile Include="model\TestCommand.cs" />
@@ -116,7 +119,12 @@
     <Compile Include="forms\TestSelection.xaml.cs">
       <DependentUpon>TestSelection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="model\TestManagementList.cs" />
     <Compile Include="model\TypeOfQuestionToIntConverter.cs" />
+    <Page Include="forms\TestManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

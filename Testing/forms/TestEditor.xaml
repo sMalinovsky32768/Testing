@@ -80,6 +80,22 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="forQuestionButton">
+            <Setter Property="Button.IsEnabled" Value="True"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Duration, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
+                    <Setter Property="Button.IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="forTestPropertiesButton">
+            <Setter Property="TextBox.IsEnabled" Value="True"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Duration, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
+                    <Setter Property="TextBox.IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="forTypeQuestionComboBox">
             <Setter Property="ComboBox.IsEnabled" Value="True"/>
             <Style.Triggers>
@@ -115,6 +131,7 @@
                 <MenuItem Header="Новый тест" Click="CreateTest"/>
                 <MenuItem Header="Открыть тест" Click="LoadTest"/>
             </MenuItem>
+            <MenuItem Header="Менеджер тестов" Click="OpenManager"/>
         </Menu>
         <Grid x:Name="testGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -138,14 +155,15 @@
                     <TextBlock Grid.Column="0" Text="Вопросы" Padding="5"/>
                     <Button x:Name="addQuestionButton" Grid.Column="1" Width="20" Height="20" 
                             HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5,0,5,5" Padding="5 1" 
-                            BorderBrush="{x:Null}" Command="{Binding AddCommand}">
+                            BorderBrush="{x:Null}" Command="{Binding AddCommand}" Style="{DynamicResource forQuestionButton}">
                         <Button.Background>
                             <ImageBrush ImageSource="../images/add.ico" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
                     <Button x:Name="deleteQuestionButton" Grid.Column="2" Width="20" Height="20" 
-                            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Padding="5 1" BorderBrush="{x:Null}" 
-                            Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedQuestion}">
+                            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Padding="5 1" 
+                            Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedQuestion}" 
+                            BorderBrush="{x:Null}" Style="{DynamicResource forQuestionButton}">
                         <Button.Background>
                             <ImageBrush ImageSource="../images/delete.ico" Stretch="Uniform"/>
                         </Button.Background>
@@ -183,7 +201,8 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Имя теста" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10 0"/>
-                        <TextBox x:Name="testNameTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" Padding="2">
+                        <TextBox x:Name="testNameTextBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" 
+                                 Margin="5" Padding="2" Style="{DynamicResource forTestPropertiesButton}">
                             <TextBox.Text>
                                 <Binding Path="TestName" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -193,7 +212,8 @@
                             </TextBox.Text>
                         </TextBox>
                         <TextBlock Text="Длительность" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="10 0"/>
-                        <TextBox x:Name="durationTextBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5" Padding="2">
+                        <TextBox x:Name="durationTextBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" 
+                                 Margin="5" Padding="2" Style="{DynamicResource forTestPropertiesButton}">
                             <TextBox.Text>
                                 <Binding Path="Duration" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>

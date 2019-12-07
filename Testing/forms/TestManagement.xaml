@@ -1,0 +1,46 @@
+﻿<Window x:Class="Testing.TestManagement"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Testing"
+        mc:Ignorable="d"
+        Title="TestManagement" Height="450" Width="800" Closed="Window_Closed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="openinEditor" Click="OpenTest" IsDefault="True">
+                Открыть в редакторе
+            </Button>
+            <Button x:Name="cancel" Click="Cancel" IsCancel="True">
+                Отмена
+            </Button>
+            <!--<Button x:Name="addButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                    Width="20" Height="20" Margin="5,0,5,5" Padding="5 1" BorderBrush="{x:Null}" Command="{Binding Path=addTest}">
+                <Button.Background>
+                    <ImageBrush ImageSource="../images/add.ico" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>-->
+            <Button x:Name="deleteButton" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Width="20" Height="20" Margin="5" Padding="5 1" BorderBrush="{x:Null}" 
+                    Command="{Binding RemoveTest}" CommandParameter="{Binding SelectedItem, ElementName=testsList}">
+                <Button.Background>
+                    <ImageBrush ImageSource="../images/delete.ico" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+        </StackPanel>
+        <ListBox x:Name="testsList" ItemsSource="{Binding Path=TestsCollection, UpdateSourceTrigger=PropertyChanged}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Path=TestName}" FontSize="18"/>
+                        <TextBlock x:Name="path" Text="{Binding Path=Path}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

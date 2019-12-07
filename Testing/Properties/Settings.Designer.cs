@@ -47,7 +47,7 @@ namespace Testing.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"if not exists (select * from sys.tables where name='group')
 begin
@@ -76,8 +76,16 @@ if not exists (select * from [User]) insert into [dbo].[User] ([name], [pass], [
             get {
                 return ((string)(this["create_database"]));
             }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.NameValueCollection list_of_tests {
+            get {
+                return ((global::System.Collections.Specialized.NameValueCollection)(this["list_of_tests"]));
+            }
             set {
-                this["create_database"] = value;
+                this["list_of_tests"] = value;
             }
         }
     }

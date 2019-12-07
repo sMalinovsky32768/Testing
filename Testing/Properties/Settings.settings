@@ -8,7 +8,7 @@
     <Setting Name="number_of_starts" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="create_database" Type="System.String" Scope="User">
+    <Setting Name="create_database" Type="System.String" Scope="Application">
       <Value Profile="(Default)">if not exists (select * from sys.tables where name='group')
 begin
 create table [dbo].[group]
@@ -32,6 +32,9 @@ if not exists (select * from [group]) insert into [group]([name]) values (N'admi
 
 if not exists (select * from [User]) insert into [dbo].[User] ([name], [pass], [group]) VALUES (N'root', N'root', 1)
 </Value>
+    </Setting>
+    <Setting Name="list_of_tests" Type="System.Collections.Specialized.NameValueCollection" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

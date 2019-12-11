@@ -40,6 +40,15 @@ namespace Testing
             }
         }
 
+        public void UpdateCollection(System.Collections.Specialized.NameValueCollection collection)
+        {
+            this.TestsCollection.Clear();
+            foreach (string s in collection.AllKeys)
+            {
+                TestsCollection.Add(new TestWithPath() { Path = collection[s], TestName = s });
+            }
+        }
+
         public void UpdateSettings()
         {
             Settings.Default.list_of_tests.Clear();
@@ -57,7 +66,7 @@ namespace Testing
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-        private TestCommand addTest;
+        /*private TestCommand addTest;
         public TestCommand AddTest
         {
             get
@@ -69,7 +78,7 @@ namespace Testing
                       TestsCollection.Insert(TestsCollection.Count, test);
                   }));
             }
-        }
+        }*/
 
         private TestCommand removeTest;
         public TestCommand RemoveTest

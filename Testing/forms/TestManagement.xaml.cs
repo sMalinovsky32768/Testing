@@ -43,6 +43,7 @@ namespace Testing
         private void Cancel(object sender, RoutedEventArgs e)
         {
             isCancel = true;
+            this.Close();
         }
     }
 }

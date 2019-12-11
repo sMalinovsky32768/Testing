@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Testing"
         mc:Ignorable="d"
-        Title="TestManagement" Height="450" Width="800" Closed="Window_Closed">
+        Title="Менеджер тестов" Height="450" Width="800" Closed="Window_Closed" WindowStyle="None">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="openinEditor" Click="OpenTest" IsDefault="True">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
+            <Button x:Name="openInEditor" Click="OpenTest" IsDefault="True" Padding="10 5" Margin="0 0 0 5">
                 Открыть в редакторе
             </Button>
-            <Button x:Name="cancel" Click="Cancel" IsCancel="True">
+            <Button x:Name="cancel" Click="Cancel" IsCancel="True" Padding="10 5" Margin="5 0 0 5">
                 Отмена
             </Button>
             <!--<Button x:Name="addButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
@@ -24,20 +24,20 @@
                     <ImageBrush ImageSource="../images/add.ico" Stretch="Uniform"/>
                 </Button.Background>
             </Button>-->
-            <Button x:Name="deleteButton" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                    Width="20" Height="20" Margin="5" Padding="5 1" BorderBrush="{x:Null}" 
+            <Button x:Name="deleteButton" Padding="10 5" Margin="5 0 0 5"
                     Command="{Binding RemoveTest}" CommandParameter="{Binding SelectedItem, ElementName=testsList}">
-                <Button.Background>
+                Удалить
+                <!--<Button.Background>
                     <ImageBrush ImageSource="../images/delete.ico" Stretch="Uniform"/>
-                </Button.Background>
+                </Button.Background>-->
             </Button>
         </StackPanel>
-        <ListBox x:Name="testsList" ItemsSource="{Binding Path=TestsCollection, UpdateSourceTrigger=PropertyChanged}">
+        <ListBox Grid.Row="1" x:Name="testsList" ItemsSource="{Binding Path=TestsCollection, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding Path=TestName}" FontSize="18"/>
-                        <TextBlock x:Name="path" Text="{Binding Path=Path}"/>
+                        <TextBlock Text="{Binding Path=TestName, UpdateSourceTrigger=PropertyChanged}" FontSize="18"/>
+                        <TextBlock x:Name="path" Text="{Binding Path=Path, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Testing.Properties;
 
 namespace Testing
 {
@@ -19,6 +20,8 @@ namespace Testing
     /// </summary>
     public partial class TestSelection : Window
     {
+        TestManagementList testManagementList;
+
         int userID;
         string userName;
         string userGroup;
@@ -29,6 +32,20 @@ namespace Testing
             userName = UName;
             userGroup = UGroup;
             InitializeComponent();
+            testManagementList = new TestManagementList(Settings.Default.list_of_tests);
+            this.DataContext = testManagementList;
+        }
+
+        private void OpenTest(object sender, RoutedEventArgs e)
+        {
+            PassingTheTest passingTheTest = new PassingTheTest(userID, userName, userGroup, ((TestWithPath)this.testsList.SelectedItem).Path);
+            passingTheTest.Show();
+            this.Close();
+        }
+
+        private void Cancel(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

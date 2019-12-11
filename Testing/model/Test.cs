@@ -135,11 +135,14 @@ namespace Testing
                 WriteIndented = true,
             };
             File.WriteAllText(fileName, JsonSerializer.Serialize<Test>(this, options));
-            Settings.Default.list_of_tests.Add(this.TestName, fileName);
-            Settings.Default.Save();
+            if (Settings.Default.list_of_tests.Get(this.TestName)==null)
+            {
+                Settings.Default.list_of_tests.Add(this.TestName, fileName);
+                Settings.Default.Save();
+            }
         }
 
-        public Test LoadTest(string fileName)
+        public static Test LoadTest(string fileName)
         {
             if (File.Exists(fileName))
             {

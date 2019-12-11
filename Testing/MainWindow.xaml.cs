@@ -58,6 +58,12 @@ namespace Testing
                 testEditor.Show();
                 this.Close();
             }
+            else
+            {
+                TestSelection testSelection = new TestSelection(userID, userName, userGroup);
+                testSelection.Show();
+                this.Close();
+            }
         }
 
         private void ExitApp(object sender, RoutedEventArgs e)

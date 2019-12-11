@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Forms;
 using Testing.Properties;
+using static Testing.Test;
 
 namespace Testing
 {
@@ -57,7 +58,7 @@ namespace Testing
             }
         }
 
-        private void LoadTest(object sender, RoutedEventArgs e)
+        private void LoadTestButton(object sender, RoutedEventArgs e)
         {
             if (test != null)
             {
@@ -69,7 +70,7 @@ namespace Testing
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
                 return;
             test = new Test();
-            test = test.LoadTest(openFileDialog.FileName);
+            test = LoadTest(openFileDialog.FileName);
             testGrid.DataContext = test;
         }
 
@@ -78,11 +79,16 @@ namespace Testing
             TestManagement testManagement = new TestManagement();
             testManagement.ShowDialog();
             if (testManagement.isCancel)
+            {
                 return;
-            string path = ((TestWithPath)testManagement.testsList.SelectedItem).Path;
-            test = new Test();
-            test = test.LoadTest(path);
-            testGrid.DataContext = test;
+            }
+            else
+            {
+                string path = ((TestWithPath)testManagement.testsList.SelectedItem).Path;
+                test = new Test();
+                test = LoadTest(path);
+                testGrid.DataContext = test;
+            }
         }
     }
 }

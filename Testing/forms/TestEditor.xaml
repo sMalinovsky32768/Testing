@@ -129,7 +129,7 @@
         <Menu Grid.Row="0" Padding="2">
             <MenuItem Header="Тест">
                 <MenuItem Header="Новый тест" Click="CreateTest"/>
-                <MenuItem Header="Открыть тест" Click="LoadTest"/>
+                <MenuItem Header="Открыть тест" Click="LoadTestButton"/>
             </MenuItem>
             <MenuItem Header="Менеджер тестов" Click="OpenManager"/>
         </Menu>

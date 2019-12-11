@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static Testing.Test;
 
 namespace Testing
 {
@@ -22,13 +23,17 @@ namespace Testing
         int userID;
         string userName;
         string userGroup;
+        Test test;
 
-        public PassingTheTest(int UID, string UName, string UGroup)
+        public PassingTheTest(int UID, string UName, string UGroup, string testPath)
         {
             userID = UID;
             userName = UName;
             userGroup = UGroup;
             InitializeComponent();
+            test = new Test();
+            test = LoadTest(testPath);
+            this.DataContext = test;
         }
     }
 }

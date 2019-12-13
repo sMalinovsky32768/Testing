@@ -38,7 +38,7 @@ namespace Testing
 
         private void OpenTest(object sender, RoutedEventArgs e)
         {
-            PassingTheTest passingTheTest = new PassingTheTest(userID, userName, userGroup, ((TestWithPath)this.testsList.SelectedItem).Path);
+            PassingTheTest passingTheTest = new PassingTheTest(userID, ((TestWithPath)this.testsList.SelectedItem).Path);
             passingTheTest.Show();
             this.Close();
         }

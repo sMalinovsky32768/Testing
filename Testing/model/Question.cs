@@ -60,10 +60,9 @@ namespace Testing
         }
 
         // oneCorrect
-        public ObservableCollection<AnswerForOneCorrect> answerChoice = new ObservableCollection<AnswerForOneCorrect>();
-        public int correct; // Номер правильного ответа (ключ AnswerChoice)
+        public ObservableCollection<AnswerCorrect> answerChoice = new ObservableCollection<AnswerCorrect>();
 
-        public ObservableCollection<AnswerForOneCorrect> AnswerChoice
+        public ObservableCollection<AnswerCorrect> AnswerChoice
         {
             get
             {
@@ -73,19 +72,6 @@ namespace Testing
             {
                 answerChoice = value;
                 OnPropertyChanged("AnswerChoice");
-            }
-        }
-        
-        public int Correct
-        {
-            get
-            {
-                return correct;
-            }
-            set
-            {
-                correct = value;
-                OnPropertyChanged("Correct");
             }
         }
 
@@ -98,7 +84,7 @@ namespace Testing
                 return addCommandForOneCorrect ??
                   (addCommandForOneCorrect = new TestCommand(obj =>
                   {
-                      AnswerForOneCorrect tempAnswer = new AnswerForOneCorrect();
+                      AnswerCorrect tempAnswer = new AnswerCorrect();
                       AnswerChoice.Insert(AnswerChoice.Count, tempAnswer);
                   }));
             }
@@ -113,7 +99,7 @@ namespace Testing
                 return removeCommandForOneCorrect ??
                   (removeCommandForOneCorrect = new TestCommand(obj =>
                   {
-                      AnswerForOneCorrect tempAnswer = obj as AnswerForOneCorrect;
+                      AnswerCorrect tempAnswer = obj as AnswerCorrect;
                       if (tempAnswer != null)
                       {
                           AnswerChoice.Remove(tempAnswer);
@@ -124,9 +110,9 @@ namespace Testing
         }
 
         // manyCorrect
-        public ObservableCollection<AnswerForManyCorrect> answerChoiceMany =
-            new ObservableCollection<AnswerForManyCorrect>(); // Словарь вариантов ответа с обозначением их правильности
-        public ObservableCollection<AnswerForManyCorrect> AnswerChoiceMany
+        public ObservableCollection<AnswerCorrect> answerChoiceMany =
+            new ObservableCollection<AnswerCorrect>(); // Словарь вариантов ответа с обозначением их правильности
+        public ObservableCollection<AnswerCorrect> AnswerChoiceMany
         {
             get
             {
@@ -148,7 +134,7 @@ namespace Testing
                 return addCommandForManyCorrect ??
                   (addCommandForManyCorrect = new TestCommand(obj =>
                   {
-                      AnswerForManyCorrect tempAnswer = new AnswerForManyCorrect();
+                      AnswerCorrect tempAnswer = new AnswerCorrect();
                       AnswerChoiceMany.Insert(AnswerChoiceMany.Count, tempAnswer);
                   }));
             }
@@ -163,7 +149,7 @@ namespace Testing
                 return removeCommandForManyCorrect ??
                   (removeCommandForManyCorrect = new TestCommand(obj =>
                   {
-                      AnswerForManyCorrect tempAnswer = obj as AnswerForManyCorrect;
+                      AnswerCorrect tempAnswer = obj as AnswerCorrect;
                       if (tempAnswer != null)
                       {
                           AnswerChoiceMany.Remove(tempAnswer);
@@ -256,9 +242,8 @@ namespace Testing
         public TypeOfQuestion Type { get; set; }
         public string QuestionWording { get; set; }
 
-        public List<AnswerForOneCorrect> AnswerChoice { get; set; } = new List<AnswerForOneCorrect>();
-        public int Correct { get; set; }
-        public List<AnswerForManyCorrect> AnswerChoiceMany { get; set; } = new List<AnswerForManyCorrect>();
+        public List<AnswerCorrect> AnswerChoice { get; set; } = new List<AnswerCorrect>();
+        public List<AnswerCorrect> AnswerChoiceMany { get; set; } = new List<AnswerCorrect>();
         public string Answer { get; set; }
 
         // accordance
@@ -377,6 +362,54 @@ namespace Testing
         }
 
         public AnswerForManyCorrect(string answer, Boolean isCorrect)
+        {
+            Answer = answer;
+            IsCorrect = isCorrect;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+    }
+
+    class AnswerCorrect : INotifyPropertyChanged // Класс ответов для вопросов с несколькими правильными ответами
+    {
+        public string answer;
+        public string Answer
+        {
+            get
+            {
+                return answer;
+            }
+            set
+            {
+                answer = value;
+                OnPropertyChanged("Answer");
+            }
+        }
+        public Boolean isCorrect;
+        public Boolean IsCorrect
+        {
+            get
+            {
+                return isCorrect;
+            }
+            set
+            {
+                isCorrect = value;
+                OnPropertyChanged("IsCorrect");
+            }
+        }
+
+        public AnswerCorrect()
+        {
+
+        }
+
+        public AnswerCorrect(string answer, Boolean isCorrect)
         {
             Answer = answer;
             IsCorrect = isCorrect;

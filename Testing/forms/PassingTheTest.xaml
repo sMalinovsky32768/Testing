@@ -7,6 +7,21 @@
         mc:Ignorable="d"
         Title="PassingTheTest" Height="450" Width="800">
     <Grid>
-        
+        <TabControl ItemsSource="{Binding Path=PassTest.Questions}" DisplayMemberPath="{Binding Path=QuestionWording}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <!--<Grid DataContext="{Binding Path=}">
+                            <TextBlock Text="{Binding Path=}"/>
+                        </Grid>-->
+                    </Grid>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>
     </Grid>
 </Window>

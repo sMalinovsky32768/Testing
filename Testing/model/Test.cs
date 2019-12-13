@@ -163,9 +163,8 @@ namespace Testing
                     question.Type = q.Type;
                     question.QuestionWording = q.QuestionWording;
                     question.Answer = q.Answer;
-                    question.Correct = q.Correct;
-                    question.AnswerChoice = new ObservableCollection<AnswerForOneCorrect>(q.AnswerChoice);
-                    question.AnswerChoiceMany = new ObservableCollection<AnswerForManyCorrect>(q.AnswerChoiceMany);
+                    question.AnswerChoice = new ObservableCollection<AnswerCorrect>(q.AnswerChoice);
+                    question.AnswerChoiceMany = new ObservableCollection<AnswerCorrect>(q.AnswerChoiceMany);
                     tempTest.Questions.Add(question);
                 }
                 tempTest.SelectedQuestion = tempTest.Questions[tempTest.Questions.Count - 1];

@@ -20,7 +20,7 @@
             <Setter Property="TextBox.Visibility" Value="Collapsed"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SelectedIndex, ElementName=typeQuestionComboBox}" Value="0">
-                    <Setter Property="TextBox.Visibility" Value="Visible"/>
+                    <Setter Property="RadioButton.Visibility" Value="Visible"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -280,12 +280,14 @@
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel>
-                                                    <TextBox Text="{Binding Path=Answer}" MinWidth="100" 
-                                                         Style="{DynamicResource answerForOne}">
-                                                    </TextBox>
-                                                    <CheckBox IsChecked="{Binding Path=IsCorrect}" 
-                                                          Style="{DynamicResource answerForMany}">
-                                                        <TextBox MinWidth="100" Text="{Binding Path=Answer}"/>
+                                                    <RadioButton IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}" 
+                                                                 GroupName="Question" Style="{DynamicResource answerForOne}">
+                                                        <TextBox Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}" MinWidth="100">
+                                                        </TextBox>
+                                                    </RadioButton>
+                                                    <CheckBox IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}" 
+                                                              Style="{DynamicResource answerForMany}">
+                                                        <TextBox MinWidth="100" Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}"/>
                                                     </CheckBox>
                                                 </StackPanel>
                                             </DataTemplate>
@@ -315,7 +317,7 @@
                                             </Button.Background>
                                         </Button>
                                     </StackPanel>
-                                    <TextBox x:Name="correct" Grid.Column="1" Margin="5" Style="{DynamicResource correctForOne}">
+                                    <!--<TextBox x:Name="correct" Grid.Column="1" Margin="5" Style="{DynamicResource correctForOne}">
                                         <TextBox.Text>
                                             <Binding Path="Correct" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
@@ -323,7 +325,7 @@
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
-                                    </TextBox>
+                                    </TextBox>-->
                                 </Grid>
                             </Grid>
                         </Grid>

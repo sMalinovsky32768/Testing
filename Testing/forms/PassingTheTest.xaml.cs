@@ -20,20 +20,15 @@ namespace Testing
     /// </summary>
     public partial class PassingTheTest : Window
     {
-        int userID;
-        string userName;
-        string userGroup;
-        Test test;
+        readonly int userID;
+        TestResult testResult;
 
-        public PassingTheTest(int UID, string UName, string UGroup, string testPath)
+        public PassingTheTest(int UID, string testPath)
         {
             userID = UID;
-            userName = UName;
-            userGroup = UGroup;
             InitializeComponent();
-            test = new Test();
-            test = LoadTest(testPath);
-            this.DataContext = test;
+            testResult = new TestResult(userID, LoadTest(testPath));
+            this.DataContext = testResult;
         }
     }
 }

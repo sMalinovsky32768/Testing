@@ -120,6 +120,7 @@
       <DependentUpon>TestSelection.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\TestManagementList.cs" />
+    <Compile Include="model\TestResult.cs" />
     <Compile Include="model\TypeOfQuestionToIntConverter.cs" />
     <Page Include="forms\TestManagement.xaml">
       <SubType>Designer</SubType>

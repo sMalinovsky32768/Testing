@@ -38,6 +38,11 @@ namespace Testing
 
         private void OpenTest(object sender, RoutedEventArgs e)
         {
+            if (testsList.SelectedItem == null)
+            {
+                e.Handled = false;
+                return;
+            }
             PassingTheTest passingTheTest = new PassingTheTest(userID, ((TestWithPath)this.testsList.SelectedItem).Path);
             passingTheTest.Show();
             this.Close();

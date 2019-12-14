@@ -8,39 +8,33 @@
         Title="TestEditor" Height="450" Width="800" Closed="Window_Closed">
     <Window.Resources>
         <local:TypeOfQuestionToIntConverter x:Key="typeOfQuestionToIntConverter"/>
-        <Style x:Key="correctForOne">
-            <Setter Property="TextBox.Visibility" Value="Collapsed"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding SelectedIndex, ElementName=typeQuestionComboBox}" Value="0">
-                    <Setter Property="TextBox.Visibility" Value="Visible"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="answerForOne">
-            <Setter Property="TextBox.Visibility" Value="Collapsed"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding SelectedIndex, ElementName=typeQuestionComboBox}" Value="0">
-                    <Setter Property="RadioButton.Visibility" Value="Visible"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="answerForMany">
-            <Setter Property="CheckBox.Visibility" Value="Collapsed"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding SelectedIndex, ElementName=typeQuestionComboBox}" Value="1">
-                    <Setter Property="CheckBox.Visibility" Value="Visible"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
         <Style x:Key="forAnswerList">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SelectedIndex, ElementName=typeQuestionComboBox}" Value="0">
                     <Setter Property="ListBox.ItemsSource"
                             Value="{Binding Path=AnswerChoice, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Setter Property="ListBox.ItemTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <RadioButton IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}" GroupName="Question">
+                                    <TextBox Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}"/>
+                                </RadioButton>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SelectedIndex, ElementName=typeQuestionComboBox}" Value="1">
                     <Setter Property="ListBox.ItemsSource" 
                             Value="{Binding Path=AnswerChoiceMany, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Setter Property="ListBox.ItemTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBox Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}"/>
+                                </CheckBox>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -66,11 +60,11 @@
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SelectedIndex, ElementName=typeQuestionComboBox}" Value="0">
                     <Setter Property="Button.Command"  Value="{Binding RemoveCommandForOneCorrect}"/>
-                    <Setter Property="Button.CommandParameter" Value="{Binding SelectedItem, ElementName=AnswerList}"/>
+                    <Setter Property="Button.CommandParameter" Value="{Binding SelectedItem, ElementName=answerList}"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SelectedIndex, ElementName=typeQuestionComboBox}" Value="1">
                     <Setter Property="Button.Command"  Value="{Binding RemoveCommandForManyCorrect}"/>
-                    <Setter Property="Button.CommandParameter" Value="{Binding SelectedItem, ElementName=AnswerList}"/>
+                    <Setter Property="Button.CommandParameter" Value="{Binding SelectedItem, ElementName=answerList}"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SelectedIndex, ElementName=typeQuestionComboBox}" Value="2">
                     <Setter Property="Button.IsEnabled" Value="False"/>
@@ -235,8 +229,9 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Тип вопроса:" Padding="5" Margin="5"/>
                             <ComboBox Grid.Column="1" x:Name="typeQuestionComboBox" Padding="2" Margin="5" 
-                                SelectedIndex="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged, 
-                                Converter={StaticResource typeOfQuestionToIntConverter}}" Style="{DynamicResource forTypeQuestionComboBox}">
+                                      SelectedIndex="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged, 
+                                Converter={StaticResource typeOfQuestionToIntConverter}}" 
+                                      Style="{DynamicResource forTypeQuestionComboBox}">
                                 <ComboBoxItem x:Name="oneCorrect">Один ответ</ComboBoxItem>
                                 <ComboBoxItem x:Name="manyCorrect">Несколько ответов</ComboBoxItem>
                                 <ComboBoxItem x:Name="inputAnswer">Ввод ответа  с клавиатуры</ComboBoxItem>
@@ -276,23 +271,7 @@
                                     </Grid.RowDefinitions>
                                     <TextBox Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}" 
                                              Style="{DynamicResource forInputAnswer}"/>
-                                    <ListBox Grid.Row="1" x:Name="answerList" Style="{DynamicResource forAnswerList}">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel>
-                                                    <RadioButton IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}" 
-                                                                 GroupName="Question" Style="{DynamicResource answerForOne}">
-                                                        <TextBox Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}" MinWidth="100">
-                                                        </TextBox>
-                                                    </RadioButton>
-                                                    <CheckBox IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}" 
-                                                              Style="{DynamicResource answerForMany}">
-                                                        <TextBox MinWidth="100" Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}"/>
-                                                    </CheckBox>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
+                                    <ListBox Grid.Row="1" x:Name="answerList" Style="{DynamicResource forAnswerList}"/>
                                 </Grid>
                                 <Grid Grid.Row="1">
                                     <Grid.ColumnDefinitions>
@@ -317,15 +296,6 @@
                                             </Button.Background>
                                         </Button>
                                     </StackPanel>
-                                    <!--<TextBox x:Name="correct" Grid.Column="1" Margin="5" Style="{DynamicResource correctForOne}">
-                                        <TextBox.Text>
-                                            <Binding Path="Correct" UpdateSourceTrigger="PropertyChanged">
-                                                <Binding.ValidationRules>
-                                                    <ExceptionValidationRule/>
-                                                </Binding.ValidationRules>
-                                            </Binding>
-                                        </TextBox.Text>
-                                    </TextBox>-->
                                 </Grid>
                             </Grid>
                         </Grid>

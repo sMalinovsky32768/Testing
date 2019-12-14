@@ -5,23 +5,97 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Testing"
         mc:Ignorable="d"
-        Title="PassingTheTest" Height="450" Width="800">
+        Title="PassingTheTest" Height="450" Width="800" Loaded="Window_Loaded" WindowStyle="None">
+    <Window.Resources>
+        <local:TypeOfQuestionToIntConverter x:Key="typeOfQuestionToIntConverter"/>
+        <Style x:Key="forInputAnswer">
+            <Setter Property="TextBox.Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged, 
+                    Converter={StaticResource typeOfQuestionToIntConverter}}" Value="2">
+                    <Setter Property="TextBox.Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="forAnswerList">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged, 
+                    Converter={StaticResource typeOfQuestionToIntConverter}}" Value="0">
+                    <Setter Property="ItemsControl.ItemsSource"
+                            Value="{Binding Path=AnswerOne, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Setter Property="ItemsControl.ItemTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <RadioButton IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}" GroupName="Question">
+                                    <TextBlock Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}"/>
+                                </RadioButton>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Type, UpdateSourceTrigger=PropertyChanged, 
+                    Converter={StaticResource typeOfQuestionToIntConverter}}" Value="1">
+                    <Setter Property="ItemsControl.ItemsSource" 
+                            Value="{Binding Path=AnswerMany, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Setter Property="ItemsControl.ItemTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBlock Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}"/>
+                                </CheckBox>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <TabControl ItemsSource="{Binding Path=PassTest.Questions}" DisplayMemberPath="{Binding Path=QuestionWording}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TabControl x:Name="tabsQuestion" ItemsSource="{Binding Path=Answers}">
             <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Path=QuestionWording}" MaxWidth="100"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition/>
-                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <!--<Grid DataContext="{Binding Path=}">
-                            <TextBlock Text="{Binding Path=}"/>
-                        </Grid>-->
+                        <Grid>
+                            <TextBlock Text="{Binding Path=QuestionWording, UpdateSourceTrigger=PropertyChanged}" Padding="10"/>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <TextBox Text="{Binding Path=InputAnswer, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{DynamicResource forInputAnswer}"/>
+                            <ItemsControl Style="{DynamicResource forAnswerList}"/>
+                        </Grid>
                     </Grid>
                 </DataTemplate>
-            </TabControl.ItemTemplate>
+            </TabControl.ContentTemplate>
         </TabControl>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Button x:Name="reply" Content="Ответить" Click="ReplyClick"/>
+            </Grid>
+            <DockPanel Grid.Row="1" Margin="0 10 0 0">
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                    <ProgressBar x:Name="durationProgress" Minimum="0" Maximum="{Binding Path=PassTest.Duration}" Width="500"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="complete" Content="Завершить" Click="Complete_Click"/>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
     </Grid>
 </Window>

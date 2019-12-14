@@ -110,6 +110,9 @@
     <Compile Include="forms\TestManagement.xaml.cs">
       <DependentUpon>TestManagement.xaml</DependentUpon>
     </Compile>
+    <Compile Include="forms\Result.xaml.cs">
+      <DependentUpon>Result.xaml</DependentUpon>
+    </Compile>
     <Compile Include="model\Question.cs" />
     <Compile Include="model\Test.cs" />
     <Compile Include="model\TestCommand.cs" />
@@ -125,6 +128,10 @@
     <Page Include="forms\TestManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="forms\Result.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

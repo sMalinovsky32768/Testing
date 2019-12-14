@@ -7,32 +7,11 @@ using System.Threading.Tasks;
 
 namespace Testing
 {
-    /*class TestResult
-    {
-        public int UserID { get; set; }
-        public Test PassTest { get; set; } = new Test();
-        public ObservableCollection<ResponseToQuestion> Responses { get; set; } = new ObservableCollection<ResponseToQuestion>();
-
-        public TestResult(int uID, Test test)
-        {
-            UserID = uID;
-            PassTest = test;
-        }
-    }
-
-    class ResponseToQuestion
-    {
-        public int Answer { get; set; } // OneCorrect
-        public ObservableCollection<bool> AnswerMany { get; set; } = new ObservableCollection<bool>(); // ManyCorrect
-        public string InputAnswer { get; set; } // Input
-        // public Dictionary<int, int> Accordance { get; set; } = new Dictionary<int, int>(); // Accordance
-    }*/
-
     class TestResult
     {
         public int UserID { get; private set; }
         public Test PassTest { get; private set; } = new Test();
-        public ObservableCollection<ResponseToQuestion> Responses { get; set; } = new ObservableCollection<ResponseToQuestion>();
+        public ObservableCollection<ResponseToQuestion> Answers { get; set; } = new ObservableCollection<ResponseToQuestion>();
 
         public TestResult(int uID, Test test)
         {
@@ -40,9 +19,81 @@ namespace Testing
             PassTest = test;
             foreach (Question question in PassTest.Questions)
             {
-                Responses.Add(new ResponseToQuestion(question.Type, question.QuestionWording, 
-                    question.AnswerChoice, question.AnswerChoiceMany, question.Answer));
+                Answers.Add(new ResponseToQuestion(question.Type, question.QuestionWording, 
+                    question.AnswerChoice, question.AnswerChoiceMany));
             }
+        }
+
+        public static ObservableCollection<OneResult> CheckResult(TestResult testResult)
+        {
+            ObservableCollection<OneResult> result = new ObservableCollection<OneResult>();
+            for (int i = 0; i < testResult.PassTest.Questions.Count; i++)
+            {
+                switch (testResult.PassTest.Questions[i].Type)
+                {
+                    case TypeOfQuestion.oneCorrect:
+                        bool tempOne = true;
+                        for (int j = 0; j < testResult.PassTest.Questions[i].AnswerChoice.Count; j++)
+                        {
+                            if (testResult.PassTest.Questions[i].AnswerChoice[j].IsCorrect != testResult.Answers[i].AnswerOne[j].IsCorrect)
+                                tempOne = false;
+                        }
+                        result.Add(new OneResult(i, tempOne));
+                        break;
+                    case TypeOfQuestion.manyCorrect:
+                        bool tempMany = true;
+                        for (int j = 0; j < testResult.PassTest.Questions[i].AnswerChoiceMany.Count; j++)
+                        {
+                            if (testResult.PassTest.Questions[i].AnswerChoiceMany[j].IsCorrect != testResult.Answers[i].AnswerMany[j].IsCorrect)
+                                tempMany = false;
+                        }
+                        result.Add(new OneResult(i, tempMany));
+                        break;
+                    case TypeOfQuestion.inputAnswer:
+                        result.Add(new OneResult(i, testResult.PassTest.Questions[i].Answer.ToLower().Trim(' ', ',', '.', '\n') ==
+                            testResult.Answers[i].InputAnswer.ToLower().Trim(' ', ',', '.', '\n')));
+                        break;
+                    case TypeOfQuestion.accordance:
+                        break;
+                }
+            }
+            return result;
+        }
+
+        public ObservableCollection<OneResult> CheckResult()
+        {
+            ObservableCollection<OneResult> result = new ObservableCollection<OneResult>();
+            for (int i = 0; i < this.PassTest.Questions.Count; i++)
+            {
+                switch (this.PassTest.Questions[i].Type)
+                {
+                    case TypeOfQuestion.oneCorrect:
+                        bool tempOne = true;
+                        for (int j = 0; j < this.PassTest.Questions[i].AnswerChoice.Count; j++)
+                        {
+                            if (this.PassTest.Questions[i].AnswerChoice[j].IsCorrect != this.Answers[i].AnswerOne[j].IsCorrect)
+                                tempOne = false;
+                        }
+                        result.Add(new OneResult(i, tempOne));
+                        break;
+                    case TypeOfQuestion.manyCorrect:
+                        bool tempMany = true;
+                        for (int j = 0; j < this.PassTest.Questions[i].AnswerChoiceMany.Count; j++)
+                        {
+                            if (this.PassTest.Questions[i].AnswerChoiceMany[j].IsCorrect != this.Answers[i].AnswerMany[j].IsCorrect)
+                                tempMany = false;
+                        }
+                        result.Add(new OneResult(i, tempMany));
+                        break;
+                    case TypeOfQuestion.inputAnswer:
+                        result.Add(new OneResult(i, this.PassTest.Questions[i].Answer.ToLower().Trim(' ', ',', '.', '\n') ==
+                            this.Answers[i].InputAnswer.ToLower().Trim(' ', ',', '.', '\n')));
+                        break;
+                    case TypeOfQuestion.accordance:
+                        break;
+                }
+            }
+            return result;
         }
     }
 
@@ -50,7 +101,7 @@ namespace Testing
     {
         public TypeOfQuestion Type { get; private set; }
         public string QuestionWording { get; private set; }
-        public ObservableCollection<AnswerCorrect> Answer { get; set; } = new ObservableCollection<AnswerCorrect>();
+        public ObservableCollection<AnswerCorrect> AnswerOne { get; set; } = new ObservableCollection<AnswerCorrect>();
 
         public ObservableCollection<AnswerCorrect> AnswerMany { get; set; } = new ObservableCollection<AnswerCorrect>();
 
@@ -60,7 +111,7 @@ namespace Testing
 
         public ResponseToQuestion() { }
         public ResponseToQuestion(TypeOfQuestion type, string wording, 
-            ObservableCollection<AnswerCorrect> one, ObservableCollection<AnswerCorrect> many, string inAnswer)
+            ObservableCollection<AnswerCorrect> one, ObservableCollection<AnswerCorrect> many)
         {
             Type = type;
             QuestionWording = wording;
@@ -69,7 +120,7 @@ namespace Testing
                 case TypeOfQuestion.oneCorrect:
                     foreach (AnswerCorrect answer in one)
                     {
-                        Answer.Add(new AnswerCorrect() { Answer = answer.Answer });
+                        AnswerOne.Add(new AnswerCorrect() { Answer = answer.Answer });
                     }
                     break;
                 case TypeOfQuestion.manyCorrect:
@@ -79,7 +130,7 @@ namespace Testing
                     }
                     break;
                 case TypeOfQuestion.inputAnswer:
-                    InputAnswer = inAnswer;
+                    // InputAnswer = inAnswer;
                     break;
                 case TypeOfQuestion.accordance:
                     break;
@@ -87,60 +138,11 @@ namespace Testing
         }
     }
 
-    /*class CheckResult
+    public class OneResult
     {
-        public static ObservableCollection<bool> Check(TestResult testResult)
-        {
-            ObservableCollection<bool> result = new ObservableCollection<bool>();
-            for (int i = 0; i < testResult.PassTest.Questions.Count; i++)
-            {
-                switch (testResult.PassTest.Questions[i].Type)
-                {
-                    case TypeOfQuestion.oneCorrect:
-                        result.Add(testResult.PassTest.Questions[i].Correct == testResult.Responses[i].Answer);
-                        break;
-                    case TypeOfQuestion.manyCorrect:
-                        ObservableCollection<bool> vs = new ObservableCollection<bool>();
-                        foreach(AnswerForManyCorrect answer in testResult.PassTest.Questions[i].AnswerChoiceMany)
-                        {
-                            vs.Add(answer.IsCorrect);
-                        }
-                        result.Add(vs == testResult.Responses[i].AnswerMany);
-                        break;
-                    case TypeOfQuestion.inputAnswer:
-                        result.Add(testResult.PassTest.Questions[i].Answer == testResult.Responses[i].InputAnswer);
-                        break;
-                    case TypeOfQuestion.accordance:
-                        break;
-                }
-            }
-            return result;
-        }
-    }*/
+        public int ID { get; set; }
+        public bool IsCorrect { get; set; }
 
-    class CheckResult
-    {
-        public static ObservableCollection<bool> Check(TestResult testResult)
-        {
-            ObservableCollection<bool> result = new ObservableCollection<bool>();
-            for (int i = 0; i < testResult.PassTest.Questions.Count; i++)
-            {
-                switch (testResult.PassTest.Questions[i].Type)
-                {
-                    case TypeOfQuestion.oneCorrect:
-                        result.Add(testResult.PassTest.Questions[i].AnswerChoice == testResult.Responses[i].Answer);
-                        break;
-                    case TypeOfQuestion.manyCorrect:
-                        result.Add(testResult.PassTest.Questions[i].AnswerChoiceMany == testResult.Responses[i].AnswerMany);
-                        break;
-                    case TypeOfQuestion.inputAnswer:
-                        result.Add(testResult.PassTest.Questions[i].Answer == testResult.Responses[i].InputAnswer);
-                        break;
-                    case TypeOfQuestion.accordance:
-                        break;
-                }
-            }
-            return result;
-        }
+        public OneResult(int id, bool isCorrect) { ID = id; IsCorrect = isCorrect; }
     }
 }

@@ -88,5 +88,17 @@ if not exists (select * from [User]) insert into [dbo].[User] ([name], [pass], [
                 this["list_of_tests"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\sMali\\Documents\\MyResults\\")]
+        public string default_result_path {
+            get {
+                return ((string)(this["default_result_path"]));
+            }
+            set {
+                this["default_result_path"] = value;
+            }
+        }
     }
 }

@@ -36,5 +36,8 @@ if not exists (select * from [User]) insert into [dbo].[User] ([name], [pass], [
     <Setting Name="list_of_tests" Type="System.Collections.Specialized.NameValueCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="default_result_path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\sMali\Documents\MyResults\</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Testing")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Mali Software")]
 [assembly: AssemblyProduct("Testing")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]

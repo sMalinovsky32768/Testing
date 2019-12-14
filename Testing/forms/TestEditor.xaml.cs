@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Forms;
-using Testing.Properties;
 using static Testing.Test;
 
 namespace Testing

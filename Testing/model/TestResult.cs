@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace Testing
 {
@@ -50,8 +45,9 @@ namespace Testing
                         result.Add(new OneResult(i, tempMany));
                         break;
                     case TypeOfQuestion.inputAnswer:
-                        result.Add(new OneResult(i, testResult.PassTest.Questions[i].Answer.ToLower().Trim(' ', ',', '.', '\n') ==
-                            testResult.Answers[i].InputAnswer.ToLower().Trim(' ', ',', '.', '\n')));
+                        result.Add(new OneResult(i, testResult.Answers[i].InputAnswer != null ? 
+                            testResult.PassTest.Questions[i].Answer.ToLower().Trim(' ', ',', '.', '\n') ==
+                            testResult.Answers[i].InputAnswer.ToLower().Trim(' ', ',', '.', '\n') : false));
                         break;
                     case TypeOfQuestion.accordance:
                         break;
@@ -86,8 +82,9 @@ namespace Testing
                         result.Add(new OneResult(i, tempMany));
                         break;
                     case TypeOfQuestion.inputAnswer:
-                        result.Add(new OneResult(i, this.PassTest.Questions[i].Answer.ToLower().Trim(' ', ',', '.', '\n') ==
-                            this.Answers[i].InputAnswer.ToLower().Trim(' ', ',', '.', '\n')));
+                        result.Add(new OneResult(i, this.Answers[i].InputAnswer != null ? 
+                            this.PassTest.Questions[i].Answer.ToLower().Trim(' ', ',', '.', '\n') ==
+                            this.Answers[i].InputAnswer.ToLower().Trim(' ', ',', '.', '\n') : false));
                         break;
                     case TypeOfQuestion.accordance:
                         break;

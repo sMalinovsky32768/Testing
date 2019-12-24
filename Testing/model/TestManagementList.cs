@@ -31,16 +31,7 @@ namespace Testing
         {
             foreach(string s in collection.AllKeys)
             {
-                TestsCollection.Add(new TestWithPath() { Path = collection[s], TestName = s });
-            }
-        }
-
-        public void UpdateCollection(System.Collections.Specialized.NameValueCollection collection)
-        {
-            this.TestsCollection.Clear();
-            foreach (string s in collection.AllKeys)
-            {
-                TestsCollection.Add(new TestWithPath() { Path = collection[s], TestName = s });
+                TestsCollection.Add(new TestWithPath() { Path = s, TestName = collection[s] });
             }
         }
 

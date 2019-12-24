@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Security.AccessControl;
+﻿using System.IO;
 using System.Windows;
 using Testing.Properties;
 
@@ -21,6 +19,12 @@ namespace Testing
         {
             if (Settings.Default.list_of_tests == null) 
                 Settings.Default.list_of_tests = new System.Collections.Specialized.NameValueCollection();
+            DirectoryInfo dir = new DirectoryInfo(Settings.Default.defaulf_test_file_save_path);
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                Settings.Default.list_of_tests.Add(file.FullName, file.Name.Replace(".json", ""));
+            }
             /*if (Settings.Default.number_of_starts == 0)
             {
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\MyTests\\";
@@ -33,7 +37,6 @@ namespace Testing
                 Settings.Default.defaulf_test_file_save_path = path;
                 Settings.Default.Save();
             }*/
-            Settings.Default.list_of_tests.Add("C:\\Users\\sMali\\Documents\\MyTests\\Test1.json", "Test1");
         }
     }
 }

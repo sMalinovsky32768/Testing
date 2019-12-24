@@ -29,8 +29,6 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Логин" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="loginTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
-            <!--<TextBlock Grid.Row="1" Grid.Column="0" Text="Группа" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
-            <TextBox Grid.Row="1" Grid.Column="1" x:Name="groupTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5"/>-->
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Пароль" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
             <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="passTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
         </Grid>

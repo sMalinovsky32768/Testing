@@ -7,7 +7,7 @@ using System.Windows;
 // связанные со сборкой.
 [assembly: AssemblyTitle("Testing")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("Retail")]
 [assembly: AssemblyCompany("Mali Software")]
 [assembly: AssemblyProduct("Testing")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]

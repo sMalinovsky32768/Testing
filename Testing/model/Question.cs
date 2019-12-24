@@ -215,16 +215,7 @@ namespace Testing
             }
         }*/
 
-        public Question()
-        {
-
-        }
-        
-        public Question(string question, TypeOfQuestion typeOfQuestion = 0)
-        {
-            QuestionWording = question;
-            Type = typeOfQuestion;
-        }
+        public Question() { }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
@@ -287,10 +278,7 @@ namespace Testing
             }
         }*/
 
-        public QuestionForDeserialize()
-        {
-
-        }
+        public QuestionForDeserialize() { }
     }
 
     class AnswerCorrect : INotifyPropertyChanged // Класс ответов для вопросов с несколькими правильными ответами
@@ -322,10 +310,7 @@ namespace Testing
             }
         }
 
-        public AnswerCorrect()
-        {
-
-        }
+        public AnswerCorrect() { }
 
         public AnswerCorrect(string answer, Boolean isCorrect)
         {

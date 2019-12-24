@@ -27,9 +27,17 @@ namespace Testing
         private void AuthorizationButton_Click(object sender, RoutedEventArgs e)
         {
             string user = loginTextBox.Text;
-            string group = groupTextBox.Text;
+            //string group = groupTextBox.Text;
             string pass = passTextBox.Password;
-            string sql = "select [User].id as id, [User].[name] as [name], [group].[name] as [group] from [User] inner join [group] on [group].[id]=[User].[group] Where [User].[name]=N'" + user + "' and [User].[pass]=N'" + pass + "' and [group].[name]=N'" + group + "'";
+            /*string sqlInsert = "if not exists(select * from[User] where name=N'" + user +
+                "') insert into[dbo].[User] ([name], [pass], [group]) VALUES(N'" + user +
+                "', N'" + pass + "', (select FIRST_VALUE(id) OVER(Order by id) from [group] where [group].[name]=N'" + group + "'))";*/
+            string sqlInsert = "if not exists(select * from[User] where name=N'" + user +
+                "') insert into[dbo].[User] ([name], [pass], [group]) VALUES(N'" + user +
+                "', N'" + pass + "', (select FIRST_VALUE(id) OVER(Order by id) from [group] where [group].[name]=N'default'))";
+            command = new SqlCommand(sqlInsert, connection);
+            //string sql = "select [User].id as id, [User].[name] as [name], [group].[name] as [group] from [User] inner join [group] on [group].[id]=[User].[group] Where [User].[name]=N'" + user + "' and [User].[pass]=N'" + pass + "' and [group].[name]=N'" + group + "'";
+            string sql = "select [User].id as id, [User].[name] as [name], [group].[name] as [group] from [User] inner join [group] on [group].[id]=[User].[group] Where [User].[name]=N'" + user + "' and [User].[pass]=N'" + pass + "'";
             usersTable = new DataTable();
             command = new SqlCommand(sql, connection);
             adapter = new SqlDataAdapter(command);
@@ -52,7 +60,7 @@ namespace Testing
                 e.Handled = false;
                 return;
             }
-            if (group=="admin")
+            if (userGroup=="admin")
             {
                 TestEditor testEditor = new TestEditor(userID, userName);
                 testEditor.Show();

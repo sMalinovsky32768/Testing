@@ -61,20 +61,6 @@ namespace Testing
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-        /*private TestCommand addTest;
-        public TestCommand AddTest
-        {
-            get
-            {
-                return addTest ??
-                  (addTest = new TestCommand(obj =>
-                  {
-                      TestWithPath test = new TestWithPath() { Path = ((TestWithPath)obj).Path, TestName = ((TestWithPath)obj).TestName };
-                      TestsCollection.Insert(TestsCollection.Count, test);
-                  }));
-            }
-        }*/
-
         private TestCommand removeTest;
         public TestCommand RemoveTest
         {

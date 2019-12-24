@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -78,12 +79,6 @@ namespace Testing
             Duration = 3600;
         }
 
-        public Test(string name, int duration = 3600)
-        {
-            TestName = name;
-            Duration = duration;
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
@@ -134,12 +129,8 @@ namespace Testing
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
                 WriteIndented = true,
             };
-            File.WriteAllText(fileName, JsonSerializer.Serialize<Test>(this, options));
-            if (Settings.Default.list_of_tests.Get(this.TestName)==null)
-            {
-                Settings.Default.list_of_tests.Add(this.TestName, fileName);
-                Settings.Default.Save();
-            }
+            string json = JsonSerializer.Serialize<Test>(this, options);
+            File.WriteAllText(fileName, json);
         }
 
         public static Test LoadTest(string fileName)

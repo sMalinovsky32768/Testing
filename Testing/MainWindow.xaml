@@ -6,12 +6,12 @@
         xmlns:sql="clr-namespace:System.Data.SqlClient;assembly=System.Data"
         xmlns:local="clr-namespace:Testing"
         mc:Ignorable="d"
-        Title="Авторизация" Height="250" Width="400" ResizeMode="NoResize" FontSize="14" 
+        Title="Авторизация" Height="200" Width="400" ResizeMode="NoResize" FontSize="14" 
         FocusManager.FocusedElement="{Binding ElementName=loginTextBox}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="151*"/>
-            <ColumnDefinition Width="243*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -20,7 +20,7 @@
         <Grid Grid.Row="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -28,11 +28,11 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Логин" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
-            <TextBox Grid.Row="0" Grid.Column="1" x:Name="loginTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5" Text="user"/>
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Группа" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
-            <TextBox Grid.Row="1" Grid.Column="1" x:Name="groupTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5" Text="default"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="loginTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
+            <!--<TextBlock Grid.Row="1" Grid.Column="0" Text="Группа" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="groupTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5"/>-->
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Пароль" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
-            <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="passTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5" Password="user"/>
+            <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="passTextBox" Margin="10 5" VerticalAlignment="Center" Padding="5"/>
         </Grid>
         <Button x:Name="authorizationButton" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Click="AuthorizationButton_Click" IsDefault="True" Grid.ColumnSpan="2">Авторизоваться</Button>
         <Button x:Name="exitButton" Grid.Row="1" Click="ExitApp" IsCancel="True" Visibility="Collapsed" Grid.ColumnSpan="2"/>

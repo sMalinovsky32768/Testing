@@ -16,8 +16,8 @@
                     <Setter Property="ListBox.ItemTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <RadioButton IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}" GroupName="Question">
-                                    <TextBox Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}"/>
+                                <RadioButton IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}" GroupName="Question" MinWidth="200">
+                                    <TextBox Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}" MinWidth="200"/>
                                 </RadioButton>
                             </DataTemplate>
                         </Setter.Value>
@@ -29,8 +29,8 @@
                     <Setter Property="ListBox.ItemTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}">
-                                    <TextBox Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox IsChecked="{Binding Path=IsCorrect, UpdateSourceTrigger=PropertyChanged}" MinWidth="200">
+                                    <TextBox Text="{Binding Path=Answer, UpdateSourceTrigger=PropertyChanged}" MinWidth="200"/>
                                 </CheckBox>
                             </DataTemplate>
                         </Setter.Value>
@@ -126,6 +126,7 @@
                 <MenuItem Header="Открыть тест" Click="LoadTestButton"/>
             </MenuItem>
             <MenuItem Header="Менеджер тестов" Click="OpenManager"/>
+            <MenuItem Header="Выйти" Click="ExitClick"/>
         </Menu>
         <Grid x:Name="testGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>

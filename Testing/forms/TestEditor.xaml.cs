@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Forms;
+using Testing.Properties;
 using static Testing.Test;
 
 namespace Testing
@@ -12,6 +14,7 @@ namespace Testing
     {
         int userID;
         string userName;
+        string fileName;
         Test test;
 
         public TestEditor()
@@ -45,15 +48,32 @@ namespace Testing
         {
             if (test != null)
             {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                /*SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = "JSON|*.json";
                 saveFileDialog.InitialDirectory = Properties.Settings.Default.defaulf_test_file_save_path;
                 saveFileDialog.DefaultExt = ".json";
                 saveFileDialog.AddExtension = true;
+                saveFileDialog.CheckFileExists = false;
                 if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
                     return;
-                string fileName = saveFileDialog.FileName;
-                test.SaveTest(fileName);
+                test.SaveTest(saveFileDialog.FileName);*/
+                string path = Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json";
+                if (System.Windows.MessageBox.Show("Сохранить тест?", "Спаси и сохрани",
+                        MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    if (File.Exists(fileName))
+                    {
+                        File.Delete(fileName);
+                    }
+                    test.SaveTest(path);
+                }
+                try
+                {
+                    Settings.Default.list_of_tests.Remove(fileName);
+                }
+                catch { }
+                Settings.Default.list_of_tests.Add(path, test.TestName);
+                Settings.Default.Save();
             }
         }
 
@@ -61,7 +81,15 @@ namespace Testing
         {
             if (test != null)
             {
-                test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json");
+                if (System.Windows.MessageBox.Show("Сохранить тест?", "Спаси и сохрани", 
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    if (File.Exists(fileName))
+                    {
+                        File.Delete(fileName);
+                    }
+                    test.SaveTest(Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json");
+                }
             }
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "JSON|*.json";
@@ -69,6 +97,7 @@ namespace Testing
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
                 return;
             test = new Test();
+            fileName = openFileDialog.FileName;
             test = LoadTest(openFileDialog.FileName);
             testGrid.DataContext = test;
         }
@@ -88,6 +117,13 @@ namespace Testing
                 test = LoadTest(path);
                 testGrid.DataContext = test;
             }
+        }
+
+        private void ExitClick(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            Close();
+            mainWindow.Show();
         }
     }
 }

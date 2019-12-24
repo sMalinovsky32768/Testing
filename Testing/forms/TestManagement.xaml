@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Testing"
         mc:Ignorable="d"
-        Title="Менеджер тестов" Height="450" Width="800" Closed="Window_Closed" WindowStyle="None">
+        Title="Менеджер тестов" Height="300" Width="500" Closed="Window_Closed" WindowStyle="None">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

@@ -86,7 +86,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid>
-                <Button x:Name="reply" Content="Ответить" Click="ReplyClick"/>
+                <!--<Button x:Name="reply" Content="Ответить" Click="ReplyClick"/>-->
             </Grid>
             <DockPanel Grid.Row="1" Margin="0 10 0 0">
                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">

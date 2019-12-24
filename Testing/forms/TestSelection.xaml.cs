@@ -3,9 +3,6 @@ using Testing.Properties;
 
 namespace Testing
 {
-    /// <summary>
-    /// Логика взаимодействия для TestSelection.xaml
-    /// </summary>
     public partial class TestSelection : Window
     {
         TestManagementList testManagementList;
@@ -21,7 +18,7 @@ namespace Testing
             userGroup = UGroup;
             InitializeComponent();
             testManagementList = new TestManagementList(Settings.Default.list_of_tests);
-            this.DataContext = testManagementList;
+            DataContext = testManagementList;
         }
 
         private void OpenTest(object sender, RoutedEventArgs e)
@@ -31,14 +28,14 @@ namespace Testing
                 e.Handled = false;
                 return;
             }
-            PassingTheTest passingTheTest = new PassingTheTest(userID, ((TestWithPath)this.testsList.SelectedItem).Path);
+            PassingTheTest passingTheTest = new PassingTheTest(userID, ((TestWithPath)testsList.SelectedItem).Path);
             passingTheTest.Show();
-            this.Close();
+            Close();
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

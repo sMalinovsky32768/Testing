@@ -7,9 +7,6 @@ using System.Windows;
 
 namespace Testing
 {
-    /// <summary>
-    /// Логика взаимодействия для TestSelection.xaml
-    /// </summary>
     public partial class Result : Window
     {
         int userID;

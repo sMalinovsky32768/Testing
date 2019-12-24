@@ -7,9 +7,6 @@ using static Testing.Test;
 
 namespace Testing
 {
-    /// <summary>
-    /// Логика взаимодействия для TestEditor.xaml
-    /// </summary>
     public partial class TestEditor : Window
     {
         int userID;
@@ -31,7 +28,7 @@ namespace Testing
 
         private void CreateTest(object sender, RoutedEventArgs e)
         {
-            if (test==null)
+            if (test == null)
             {
                 test = new Test();
                 testGrid.DataContext = test;
@@ -40,7 +37,7 @@ namespace Testing
             {
                 TestEditor editor = new TestEditor(userID, userName);
                 editor.Show();
-                editor.CreateTest((object)editor, new RoutedEventArgs());
+                editor.CreateTest(editor, new RoutedEventArgs());
             }
         }
 
@@ -48,15 +45,6 @@ namespace Testing
         {
             if (test != null)
             {
-                /*SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "JSON|*.json";
-                saveFileDialog.InitialDirectory = Properties.Settings.Default.defaulf_test_file_save_path;
-                saveFileDialog.DefaultExt = ".json";
-                saveFileDialog.AddExtension = true;
-                saveFileDialog.CheckFileExists = false;
-                if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
-                    return;
-                test.SaveTest(saveFileDialog.FileName);*/
                 string path = Properties.Settings.Default.defaulf_test_file_save_path + test.TestName + ".json";
                 if (System.Windows.MessageBox.Show("Сохранить тест?", "Спаси и сохрани",
                         MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -81,7 +69,7 @@ namespace Testing
         {
             if (test != null)
             {
-                if (System.Windows.MessageBox.Show("Сохранить тест?", "Спаси и сохрани", 
+                if (System.Windows.MessageBox.Show("Сохранить тест?", "Спаси и сохрани",
                     MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     if (File.Exists(fileName))
@@ -95,7 +83,10 @@ namespace Testing
             openFileDialog.Filter = "JSON|*.json";
             openFileDialog.InitialDirectory = Properties.Settings.Default.defaulf_test_file_save_path;
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            {
                 return;
+            }
+
             test = new Test();
             fileName = openFileDialog.FileName;
             test = LoadTest(openFileDialog.FileName);

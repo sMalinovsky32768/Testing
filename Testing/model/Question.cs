@@ -174,54 +174,15 @@ namespace Testing
             }
         }
 
-        // accordance
-        /*public ObservableCollection<string> accordanceColunm1 = new ObservableCollection<string>();
-        public ObservableCollection<string> AccordanceColunm1
-        {
-            get
-            {
-                return accordanceColunm1;
-            }
-            set
-            {
-                accordanceColunm1 = value;
-                OnPropertyChanged("AccordanceColumn1");
-            }
-        }
-        public ObservableCollection<string> accordanceColunm2 = new ObservableCollection<string>();
-        public ObservableCollection<string> AccordanceColunm2
-        {
-            get
-            {
-                return accordanceColunm2;
-            }
-            set
-            {
-                accordanceColunm2 = value;
-                OnPropertyChanged("AccordanceColumn2");
-            }
-        }
-        public Dictionary<int, int> accordance = new Dictionary<int, int>(); // Словарь соответствия AccordanceColumn1 и AccordanceColumn2
-        public Dictionary<int, int> Accordance
-        {
-            get
-            {
-                return accordance;
-            }
-            set
-            {
-                accordance = value;
-                OnPropertyChanged("Accordance");
-            }
-        }*/
-
         public Question() { }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
         }
     }
 
@@ -236,48 +197,6 @@ namespace Testing
         public List<AnswerCorrect> AnswerChoice { get; set; } = new List<AnswerCorrect>();
         public List<AnswerCorrect> AnswerChoiceMany { get; set; } = new List<AnswerCorrect>();
         public string Answer { get; set; }
-
-        // accordance
-        /*public ObservableCollection<string> accordanceColunm1 = new ObservableCollection<string>();
-        public ObservableCollection<string> AccordanceColunm1
-        {
-            get
-            {
-                return accordanceColunm1;
-            }
-            set
-            {
-                accordanceColunm1 = value;
-                OnPropertyChanged("AccordanceColumn1");
-            }
-        }
-        public ObservableCollection<string> accordanceColunm2 = new ObservableCollection<string>();
-        public ObservableCollection<string> AccordanceColunm2
-        {
-            get
-            {
-                return accordanceColunm2;
-            }
-            set
-            {
-                accordanceColunm2 = value;
-                OnPropertyChanged("AccordanceColumn2");
-            }
-        }
-        public Dictionary<int, int> accordance = new Dictionary<int, int>(); // Словарь соответствия AccordanceColumn1 и AccordanceColumn2
-        public Dictionary<int, int> Accordance
-        {
-            get
-            {
-                return accordance;
-            }
-            set
-            {
-                accordance = value;
-                OnPropertyChanged("Accordance");
-            }
-        }*/
-
         public QuestionForDeserialize() { }
     }
 
@@ -322,7 +241,9 @@ namespace Testing
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
         }
     }
 }

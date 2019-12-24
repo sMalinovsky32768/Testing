@@ -30,7 +30,7 @@ namespace Testing
                 "from [group] where [group].[name]=N'default'))";
             command = new SqlCommand(sqlInsert, connection);
             string sql = "select [User].id as id, [User].[name] as [name], [group].[name] as [group] " +
-                "from [User] inner join [group] on [group].[id]=[User].[group] Where [User].[name]=N'" + 
+                "from [User] inner join [group] on [group].[id]=[User].[group] Where [User].[name]=N'" +
                 user + "' and [User].[pass]=N'" + pass + "'";
             usersTable = new DataTable();
             command = new SqlCommand(sql, connection);
@@ -54,7 +54,7 @@ namespace Testing
                 e.Handled = false;
                 return;
             }
-            if (userGroup=="admin")
+            if (userGroup == "admin")
             {
                 TestEditor testEditor = new TestEditor(userID, userName);
                 Close();

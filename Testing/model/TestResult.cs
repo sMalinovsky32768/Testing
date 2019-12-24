@@ -14,7 +14,7 @@ namespace Testing
             PassTest = test;
             foreach (Question question in PassTest.Questions)
             {
-                Answers.Add(new ResponseToQuestion(question.Type, question.QuestionWording, 
+                Answers.Add(new ResponseToQuestion(question.Type, question.QuestionWording,
                     question.AnswerChoice, question.AnswerChoiceMany));
             }
         }
@@ -31,7 +31,9 @@ namespace Testing
                         for (int j = 0; j < testResult.PassTest.Questions[i].AnswerChoice.Count; j++)
                         {
                             if (testResult.PassTest.Questions[i].AnswerChoice[j].IsCorrect != testResult.Answers[i].AnswerOne[j].IsCorrect)
+                            {
                                 tempOne = false;
+                            }
                         }
                         result.Add(new OneResult(i, tempOne));
                         break;
@@ -40,12 +42,14 @@ namespace Testing
                         for (int j = 0; j < testResult.PassTest.Questions[i].AnswerChoiceMany.Count; j++)
                         {
                             if (testResult.PassTest.Questions[i].AnswerChoiceMany[j].IsCorrect != testResult.Answers[i].AnswerMany[j].IsCorrect)
+                            {
                                 tempMany = false;
+                            }
                         }
                         result.Add(new OneResult(i, tempMany));
                         break;
                     case TypeOfQuestion.inputAnswer:
-                        result.Add(new OneResult(i, testResult.Answers[i].InputAnswer != null ? 
+                        result.Add(new OneResult(i, testResult.Answers[i].InputAnswer != null ?
                             testResult.PassTest.Questions[i].Answer.ToLower().Trim(' ', ',', '.', '\n') ==
                             testResult.Answers[i].InputAnswer.ToLower().Trim(' ', ',', '.', '\n') : false));
                         break;
@@ -59,32 +63,36 @@ namespace Testing
         public ObservableCollection<OneResult> CheckResult()
         {
             ObservableCollection<OneResult> result = new ObservableCollection<OneResult>();
-            for (int i = 0; i < this.PassTest.Questions.Count; i++)
+            for (int i = 0; i < PassTest.Questions.Count; i++)
             {
-                switch (this.PassTest.Questions[i].Type)
+                switch (PassTest.Questions[i].Type)
                 {
                     case TypeOfQuestion.oneCorrect:
                         bool tempOne = true;
-                        for (int j = 0; j < this.PassTest.Questions[i].AnswerChoice.Count; j++)
+                        for (int j = 0; j < PassTest.Questions[i].AnswerChoice.Count; j++)
                         {
-                            if (this.PassTest.Questions[i].AnswerChoice[j].IsCorrect != this.Answers[i].AnswerOne[j].IsCorrect)
+                            if (PassTest.Questions[i].AnswerChoice[j].IsCorrect != Answers[i].AnswerOne[j].IsCorrect)
+                            {
                                 tempOne = false;
+                            }
                         }
                         result.Add(new OneResult(i, tempOne));
                         break;
                     case TypeOfQuestion.manyCorrect:
                         bool tempMany = true;
-                        for (int j = 0; j < this.PassTest.Questions[i].AnswerChoiceMany.Count; j++)
+                        for (int j = 0; j < PassTest.Questions[i].AnswerChoiceMany.Count; j++)
                         {
-                            if (this.PassTest.Questions[i].AnswerChoiceMany[j].IsCorrect != this.Answers[i].AnswerMany[j].IsCorrect)
+                            if (PassTest.Questions[i].AnswerChoiceMany[j].IsCorrect != Answers[i].AnswerMany[j].IsCorrect)
+                            {
                                 tempMany = false;
+                            }
                         }
                         result.Add(new OneResult(i, tempMany));
                         break;
                     case TypeOfQuestion.inputAnswer:
-                        result.Add(new OneResult(i, this.Answers[i].InputAnswer != null ? 
-                            this.PassTest.Questions[i].Answer.ToLower().Trim(' ', ',', '.', '\n') ==
-                            this.Answers[i].InputAnswer.ToLower().Trim(' ', ',', '.', '\n') : false));
+                        result.Add(new OneResult(i, Answers[i].InputAnswer != null ?
+                            PassTest.Questions[i].Answer.ToLower().Trim(' ', ',', '.', '\n') ==
+                            Answers[i].InputAnswer.ToLower().Trim(' ', ',', '.', '\n') : false));
                         break;
                     case TypeOfQuestion.accordance:
                         break;
@@ -104,10 +112,8 @@ namespace Testing
 
         public string InputAnswer { get; set; }
 
-        // public Dictionary<int, int> Accordance { get; set; } = new Dictionary<int, int>();
-
         public ResponseToQuestion() { }
-        public ResponseToQuestion(TypeOfQuestion type, string wording, 
+        public ResponseToQuestion(TypeOfQuestion type, string wording,
             ObservableCollection<AnswerCorrect> one, ObservableCollection<AnswerCorrect> many)
         {
             Type = type;
@@ -127,7 +133,6 @@ namespace Testing
                     }
                     break;
                 case TypeOfQuestion.inputAnswer:
-                    // InputAnswer = inAnswer;
                     break;
                 case TypeOfQuestion.accordance:
                     break;

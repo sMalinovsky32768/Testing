@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using Testing.Properties;
 
@@ -29,10 +30,18 @@ namespace Testing
 
         public TestManagementList(System.Collections.Specialized.NameValueCollection collection)
         {
-            foreach(string s in collection.AllKeys)
+            Settings.Default.list_of_tests.Clear();
+            DirectoryInfo dir = new DirectoryInfo(Settings.Default.defaulf_test_file_save_path);
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                Settings.Default.list_of_tests.Add(file.FullName, file.Name.Replace(".json", ""));
+            }
+            foreach (string s in collection.AllKeys)
             {
                 TestsCollection.Add(new TestWithPath() { Path = s, TestName = collection[s] });
             }
+            Settings.Default.Save();
         }
 
         public void UpdateSettings()
@@ -49,7 +58,9 @@ namespace Testing
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
         }
 
         private TestCommand removeTest;
@@ -104,7 +115,9 @@ namespace Testing
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
         }
     }
 }

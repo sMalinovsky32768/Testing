@@ -13,9 +13,6 @@ using static Testing.TestResult;
 
 namespace Testing
 {
-    /// <summary>
-    /// Логика взаимодействия для PassingTheTest.xaml
-    /// </summary>
     public partial class PassingTheTest : Window
     {
         readonly int userID;
@@ -28,8 +25,8 @@ namespace Testing
             userID = UID;
             InitializeComponent();
             testResult = new TestResult(userID, LoadTest(testPath));
-            this.DataContext = testResult;
-            this.Title = testResult.PassTest.TestName;
+            DataContext = testResult;
+            Title = testResult.PassTest.TestName;
         }
 
         private void ReplyClick(object sender, RoutedEventArgs e)
@@ -45,7 +42,7 @@ namespace Testing
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
                 WriteIndented = true,
             };
-            File.WriteAllText(Settings.Default.default_result_path + userID + "_" + testResult.PassTest.TestName + ".json", 
+            File.WriteAllText(Settings.Default.default_result_path + userID + "_" + testResult.PassTest.TestName + ".json",
                 JsonSerializer.Serialize<ObservableCollection<OneResult>>(res, options));
             Result result = new Result(userID, testResult.PassTest.TestName, res);
             result.Show();

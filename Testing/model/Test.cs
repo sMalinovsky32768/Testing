@@ -3,12 +3,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
-using Testing.Properties;
 
 namespace Testing
 {
@@ -59,7 +57,7 @@ namespace Testing
                 OnPropertyChanged("SelectedQuestion");
             }
         }
-        
+
         public ObservableCollection<Question> Questions
         {
             get
@@ -83,7 +81,9 @@ namespace Testing
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
         }
 
         private TestCommand addCommand;
@@ -148,7 +148,7 @@ namespace Testing
                 testForDeserialize = JsonSerializer.Deserialize<TestForDeserialize>(temp, options);
                 tempTest.TestName = testForDeserialize.TestName;
                 tempTest.Duration = testForDeserialize.Duration;
-                foreach(QuestionForDeserialize q in testForDeserialize.Questions)
+                foreach (QuestionForDeserialize q in testForDeserialize.Questions)
                 {
                     Question question = new Question();
                     question.Type = q.Type;
@@ -175,7 +175,7 @@ namespace Testing
 
         public TestForDeserialize()
         {
-            
+
         }
     }
 }

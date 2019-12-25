@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Windows;
 using Testing.Properties;
@@ -32,6 +33,10 @@ namespace Testing
                 Settings.Default.defaulf_test_file_save_path = path;
                 Settings.Default.Save();
             }
+            /*if (ConfigurationManager.ConnectionStrings["UsersConnection"] == null)
+                ConfigurationManager.ConnectionStrings.Add(new ConnectionStringSettings("UsersConnection",
+                    "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=" + Directory.GetCurrentDirectory() +
+                    "\\Users.mdf;Integrated Security=True", "System.Data.SqlClient"));*/
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Testing
 {
-    class TestResult
+    public class TestResult
     {
         public int UserID { get; private set; }
         public Test PassTest { get; private set; } = new Test();
@@ -102,7 +102,7 @@ namespace Testing
         }
     }
 
-    class ResponseToQuestion
+    public class ResponseToQuestion
     {
         public TypeOfQuestion Type { get; private set; }
         public string QuestionWording { get; private set; }

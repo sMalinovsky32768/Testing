@@ -10,12 +10,16 @@ using System.Text.Unicode;
 
 namespace Testing
 {
-    class Test : INotifyPropertyChanged
+    public class Test : INotifyPropertyChanged
     {
-        public string testName; // название теста
-        public int duration; // Длительность теста в секундах
+        private string testName; // название теста
+        private int duration; // Длительность теста в секундах
         private Question selectedQuestion;
-        public ObservableCollection<Question> questions = new ObservableCollection<Question>(new List<Question>());
+        private ObservableCollection<Question> questions = new ObservableCollection<Question>(new List<Question>());
+        private int ratingExcellent;
+        private int ratingGood;
+        private int ratingSatisfactory;
+
         private int incId = 0;
 
         public string TestName
@@ -68,6 +72,43 @@ namespace Testing
             {
                 questions = value;
                 OnPropertyChanged("Questions");
+            }
+        }
+
+        public int RatingExcellent
+        {
+            get
+            {
+                return ratingExcellent;
+            }
+            set
+            {
+                ratingExcellent = value;
+                OnPropertyChanged("RatingExcellent");
+            }
+        }
+        public int RatingGood
+        {
+            get
+            {
+                return ratingGood;
+            }
+            set
+            {
+                ratingGood = value;
+                OnPropertyChanged("RatingGood");
+            }
+        }
+        public int RatingSatisfactory
+        {
+            get
+            {
+                return ratingSatisfactory;
+            }
+            set
+            {
+                ratingSatisfactory = value;
+                OnPropertyChanged("RatingSatisfactory");
             }
         }
 
@@ -148,6 +189,9 @@ namespace Testing
                 testForDeserialize = JsonSerializer.Deserialize<TestForDeserialize>(temp, options);
                 tempTest.TestName = testForDeserialize.TestName;
                 tempTest.Duration = testForDeserialize.Duration;
+                tempTest.RatingExcellent = testForDeserialize.RatingExcellent;
+                tempTest.RatingGood = testForDeserialize.RatingGood;
+                tempTest.RatingSatisfactory = testForDeserialize.RatingSatisfactory;
                 foreach (QuestionForDeserialize q in testForDeserialize.Questions)
                 {
                     Question question = new Question();
@@ -165,13 +209,17 @@ namespace Testing
         }
     }
 
-    class TestForDeserialize
+    public class TestForDeserialize
     {
         public string TestName { get; set; }
 
         public int Duration { get; set; }
 
         public List<QuestionForDeserialize> Questions { get; set; } = new List<QuestionForDeserialize>();
+
+        public int RatingExcellent { get; set; }
+        public int RatingGood { get; set; }
+        public int RatingSatisfactory { get; set; }
 
         public TestForDeserialize()
         {

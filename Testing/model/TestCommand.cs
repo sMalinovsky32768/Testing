@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace Testing
 {
-    class TestCommand : ICommand
+    public class TestCommand : ICommand
     {
         private Action<object> execute;
         private Func<object, bool> canExecute;

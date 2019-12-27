@@ -44,7 +44,7 @@ namespace Testing
             };
             File.WriteAllText(Settings.Default.default_result_path + userID + "_" + testResult.PassTest.TestName + ".json",
                 JsonSerializer.Serialize<ObservableCollection<OneResult>>(res, options));
-            Result result = new Result(userID, testResult.PassTest.TestName, res);
+            Result result = new Result(userID, testResult, res);
             result.Show();
             Close();
         }

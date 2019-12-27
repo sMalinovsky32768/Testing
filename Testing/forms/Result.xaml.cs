@@ -20,7 +20,7 @@ namespace Testing
         SqlConnection connection;
         SqlDataAdapter adapter;
 
-        public Result(int UID, string test, ObservableCollection<OneResult> res)
+        public Result(int UID, TestResult test, ObservableCollection<OneResult> res)
         {
             InitializeComponent();
             userID = UID;
@@ -44,8 +44,39 @@ namespace Testing
             {
                 MessageBox.Show(ex.Message);
             }
-            testName = test;
+            testName = test.PassTest.TestName;
             result = res;
+            int countCorrect = 0;
+            for (int i = 0; i < result.Count; i++)
+            {
+                if (result[i].IsCorrect)
+                    countCorrect++;
+            }
+            double temp = ((double)countCorrect / result.Count) * 100;
+            int perc = (int)Math.Round(temp);
+            percent.Text = perc.ToString() + "%";
+            if (perc < test.PassTest.RatingSatisfactory)
+            {
+                assessnent.Text = "2";
+            }
+            else
+            {
+                if (perc < test.PassTest.RatingGood)
+                {
+                    assessnent.Text = "3";
+                }
+                else
+                {
+                    if (perc < test.PassTest.RatingExcellent)
+                    {
+                        assessnent.Text = "4";
+                    }
+                    else
+                    {
+                        assessnent.Text = "5";
+                    }
+                }
+            }
             testNameBlock.Text = testName;
             userAndGroup.Text = String.Format("{0}: {1}", groupName, userName);
             viewResult.ItemsSource = result;

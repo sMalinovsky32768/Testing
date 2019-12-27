@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Testing
 {
-    class TypeOfQuestionToIntConverter : IValueConverter
+    public class TypeOfQuestionToIntConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

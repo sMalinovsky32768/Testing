@@ -6,7 +6,7 @@ using Testing.Properties;
 
 namespace Testing
 {
-    class TestManagementList : INotifyPropertyChanged
+    public class TestManagementList : INotifyPropertyChanged
     {
 
         public ObservableCollection<TestWithPath> testsCollection = new ObservableCollection<TestWithPath>();
@@ -82,7 +82,7 @@ namespace Testing
         }
     }
 
-    class TestWithPath : INotifyPropertyChanged
+    public class TestWithPath : INotifyPropertyChanged
     {
         private string testName;
         public string TestName

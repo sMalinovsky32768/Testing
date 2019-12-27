@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Testing
 {
-    enum TypeOfQuestion
+    public enum TypeOfQuestion
     {
         oneCorrect, // один правильный ответ
         manyCorrect, // несколько пправильных ответов
@@ -15,7 +15,7 @@ namespace Testing
         accordance // соответствие
     }
 
-    class Question : INotifyPropertyChanged
+    public class Question : INotifyPropertyChanged
     {
         private int id;
         [JsonIgnore]
@@ -186,7 +186,7 @@ namespace Testing
         }
     }
 
-    class QuestionForDeserialize
+    public class QuestionForDeserialize
     {
         [JsonIgnore]
         public int Id { get; set; }
@@ -200,7 +200,7 @@ namespace Testing
         public QuestionForDeserialize() { }
     }
 
-    class AnswerCorrect : INotifyPropertyChanged // Класс ответов для вопросов с несколькими правильными ответами
+    public class AnswerCorrect : INotifyPropertyChanged // Класс ответов для вопросов с несколькими правильными ответами
     {
         public string answer;
         public string Answer
